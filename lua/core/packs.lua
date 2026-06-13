@@ -30,4 +30,7 @@ require("plugins.fzf")
 -- man.lua: Enhanced man page viewer.
 require("plugins.man")
 
+-- matchparen: Highlight matching brackets.
+require("plugins.matchparen")
+
 return M
