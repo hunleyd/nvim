@@ -46,8 +46,20 @@ M.notify = function(msg, level, opts)
   title = opts.title or config.title
 
   local buf = vim.api.nvim_create_buf(false, true)
-  local width = math.max(#msg, #title) + 4
-  local height = 1
+
+  -- Split message into lines for multi-line support
+  local lines = {}
+  for s in msg:gmatch("[^\r\n]+") do
+    table.insert(lines, "  " .. s .. "  ")
+  end
+
+  local max_line_width = 0
+  for _, line in ipairs(lines) do
+    max_line_width = math.max(max_line_width, #line)
+  end
+
+  local width = math.max(max_line_width, #title) + 2
+  local height = #lines
 
   local win_opts = {
     relative = "editor",
@@ -62,7 +74,7 @@ M.notify = function(msg, level, opts)
   }
 
   local win = vim.api.nvim_open_win(buf, false, win_opts)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "  " .. msg .. "  " })
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
   -- Highlight consistent with meowsoot
   vim.api.nvim_set_hl(0, "NotifyWin", { link = "NormalFloat" })
