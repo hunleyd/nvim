@@ -343,6 +343,19 @@ require("mini.input").setup({
 })
 
 -- -----------------------------------------------------------------------------
+-- Configuration: mini.jump
+-- -----------------------------------------------------------------------------
+
+-- mini.jump enhances standard f/F/t/T motions with multi-line reach 
+-- and visual highlighting of targets.
+require("mini.jump").setup({
+  -- Delay (in ms) before highlighting target characters.
+  delay = {
+    highlight = 250,
+  },
+})
+
+-- -----------------------------------------------------------------------------
 -- Configuration: mini.clue
 -- -----------------------------------------------------------------------------
 
