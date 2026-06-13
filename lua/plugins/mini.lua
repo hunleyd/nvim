@@ -96,4 +96,10 @@ require("mini.completion").setup({
     -- Automatically set up completion for every attached LSP client.
     auto_setup = true,
   },
+
+  -- Window configuration for info and signature popups.
+  window = {
+    info = { border = "rounded", winblend = 0 },
+    signature = { border = "rounded", winblend = 0 },
+  },
 })
