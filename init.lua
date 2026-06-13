@@ -13,5 +13,6 @@
 
 -- Placeholder for future configuration modules.
 -- We will follow a modular approach by placing logic in the 'lua/' directory.
+require("core.packs")
 
 print("Neovim configuration initialized.")
