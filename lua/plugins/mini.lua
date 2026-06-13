@@ -223,8 +223,8 @@ require("mini.basics").setup({
   options = {
     -- Enable basic sane options (number, ignorecase, etc.).
     basic = true,
-    -- Enable extra UI enhancements.
-    extra_ui = false,
+    -- Enable extra UI enhancements (cursorline, global statusline, etc.).
+    extra_ui = true,
   },
   -- Mappings management.
   mappings = {
@@ -246,3 +246,5 @@ require("mini.basics").setup({
 
 -- Build keyboard habits: Disable mouse support entirely.
 vim.opt.mouse = ""
+le characters (tabs, trailing spaces).
+vim.opt.list = false
