@@ -187,4 +187,9 @@ require("mini.pairs").setup({
     ["<"] = { action = "open", pair = "<>", neigh_pattern = "[{][}]" },
     [">"] = { action = "close", pair = "<>", neigh_pattern = "[{][}]" },
   },
+  -- Active modes for autopairing.
+  modes = {
+    -- Enable autopairing in the command-line.
+    command = true,
+  },
 })
