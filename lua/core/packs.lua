@@ -42,4 +42,7 @@ require("plugins.shada")
 -- spellfile: Automatic management of spell-check dictionaries.
 require("plugins.spellfile")
 
+-- comment: Native commenting support.
+require("plugins.comment")
+
 return M
