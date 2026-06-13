@@ -325,6 +325,19 @@ miniclue.setup({
   },
 })
 
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.cmdline
+-- -----------------------------------------------------------------------------
+
+-- mini.cmdline provides intelligent assistance as you type in the command-line.
+-- It features autocomplete, autocorrection, and range previews (autopeek).
+require("mini.cmdline").setup({
+  -- Behavior sections
+  completion = { delay = 100 },
+  correction = { delay = 100 },
+  peek = { delay = 100 },
+})
+
 -- Build keyboard habits: Disable mouse support entirely.
 vim.opt.mouse = ""
 
