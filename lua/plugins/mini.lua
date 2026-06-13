@@ -63,4 +63,9 @@ require("mini.comment").setup({
     -- Define 'comment' textobject (e.g., 'dgc' to delete comment block).
     textobject = "gc",
   },
+  -- Options for fine-tuning behavior.
+  options = {
+    -- Whether to force a single space of padding between comment marker and code.
+    pad_comment_parts = true,
+  },
 })
