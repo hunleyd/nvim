@@ -24,4 +24,7 @@ require("plugins.nohlsearch")
 -- nvim.difftool: Modern directory and file comparison.
 require("plugins.difftool")
 
+-- fzf.vim: Fuzzy finder integration.
+require("plugins.fzf")
+
 return M
