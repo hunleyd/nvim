@@ -67,5 +67,7 @@ require("mini.comment").setup({
   options = {
     -- Whether to force a single space of padding between comment marker and code.
     pad_comment_parts = true,
+    -- Whether to ignore blank lines when commenting a block.
+    ignore_blank_line = true,
   },
 })
