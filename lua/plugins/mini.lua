@@ -99,16 +99,49 @@ require("mini.completion").setup({
 
   -- Window configuration for info and signature popups.
   window = {
-    info = { border = "rounded", winblend = 0 },
     signature = { border = "rounded", winblend = 0 },
   },
 })
 
 -- -----------------------------------------------------------------------------
--- Keybindings: mini.completion
+-- Configuration: mini.keymap
 -- -----------------------------------------------------------------------------
 
--- Smart <Tab> and <S-Tab> mappings for completion navigation and indentation.
--- Uses expr = true to dynamically decide the result of the keypress.
-vim.keymap.set("i", "<Tab>", "v:lua.Utils.smart_tab()", { expr = true, noremap = true })
-vim.keymap.set("i", "<S-Tab>", "v:lua.Utils.smart_s_tab()", { expr = true, noremap = true })
+-- mini.keymap simplifies complex, multi-step mappings and high-speed combos.
+require("mini.keymap").setup({})
+
+-- -----------------------------------------------------------------------------
+-- Keybindings: mini.completion (via mini.keymap)
+-- -----------------------------------------------------------------------------
+
+local mk = require("mini.keymap")
+
+-- Smart <Tab>: Navigate menu, jump snippets, indent, or trigger completion.
+mk.map_multistep("i", "<Tab>", {
+  "pmenu_next",
+  "vimsnippet_next",
+  "increase_indent",
+  {
+    condition = function()
+      return true
+    end,
+    action = function()
+      return require("mini.completion").completefunc_twostep()
+    end,
+  },
+})
+
+-- Smart <S-Tab>: Navigate menu backwards, jump snippets backwards, or dedent.
+mk.map_multistep("i", "<S-Tab>", {
+  "pmenu_prev",
+  "vimsnippet_prev",
+  "decrease_indent",
+  {
+    condition = function()
+      return true
+    end,
+    action = function()
+      return vim.api.nvim_replace_termcodes("<S-Tab>", true, true, true)
+    end,
+  },
+})
