@@ -379,26 +379,14 @@ vim.keymap.set("n", "<leader>j", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_o
 -- Mapping: <leader>jc to jump to a specific character with a modern delayed prompt.
 vim.keymap.set("n", "<leader>jc", function()
   local jump2d = require("mini.jump2d")
-  -- Define a custom spotter that prompts for a character using mini.input.
-  -- We wait a moment before showing the prompt to allow for immediate input.
-  local opts = jump2d.builtin_opts.single_character()
-  -- Override the before_start hook to use our modern notification/input system.
-  opts.hooks = {
-    before_start = function()
-      -- This is the internal mini.jump2d delay logic. 
-      -- By using the builtin 'single_character', it already handles 'getcharstr'.
-      -- To use a floating input window specifically, we define a custom wrapper.
-    end,
-  }
-  
-  -- Implementation Note: mini.jump2d's 'single_character' is already a wrapper 
-  -- around 'getcharstr'. To get a TRUE floating window from mini.input, 
-  -- we must call it explicitly.
-  
+  -- Use vim.ui.input (leveraging mini.input) for a floating prompt.
   vim.ui.input({ prompt = "Jump to character: " }, function(input)
     if input and #input > 0 then
+      -- Target only the first character entered.
       local char = input:sub(1, 1)
+      -- Generate a spotter for that specific character.
       local spotter = jump2d.gen_pattern_spotter(vim.pesc(char))
+      -- Start the 2D jump session.
       jump2d.start({ spotter = spotter })
     end
   end)
