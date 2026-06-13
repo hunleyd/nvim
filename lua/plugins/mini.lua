@@ -348,8 +348,8 @@ require("mini.diff").setup({
   -- Use signs in the gutter (signcolumn).
   view = {
     style = "sign",
-    -- Use a clean solid bar for all change types.
-    signs = { add = "┃", change = "┃", delete = "┃" },
+    -- Use symbols for better distinction between change types.
+    signs = { add = "+", change = "~", delete = "-" },
   },
 })
 
