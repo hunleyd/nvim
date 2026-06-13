@@ -48,4 +48,7 @@ require("plugins.comment")
 -- ui2: Experimental modernized UI architecture.
 require("plugins.ui2")
 
+-- meowsoot: Main colorscheme.
+require("plugins.meowsoot")
+
 return M
