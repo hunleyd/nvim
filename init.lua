@@ -17,4 +17,4 @@ _G.Utils = require("core.utils")
 require("core.packs")
 require("core.completion")
 
-print("Neovim configuration initialized.")
+Utils.notify("Neovim configuration initialized.", " System ")
