@@ -329,6 +329,17 @@ require("mini.bracketed").setup({
 })
 
 -- -----------------------------------------------------------------------------
+-- Configuration: mini.input (Modern Input Prompt)
+-- -----------------------------------------------------------------------------
+
+-- mini.input provides a modernized replacement for vim.ui.input.
+-- It uses a floating window for prompts, ensuring a consistent UI2 experience.
+require("mini.input").setup({
+  -- Default context scope for the input prompt.
+  scope = "editor",
+})
+
+-- -----------------------------------------------------------------------------
 -- Configuration: mini.clue
 -- -----------------------------------------------------------------------------
 
