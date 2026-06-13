@@ -21,4 +21,7 @@ require("plugins.matchit")
 -- nohlsearch: Automatically clear search highlights.
 require("plugins.nohlsearch")
 
+-- nvim.difftool: Modern directory and file comparison.
+require("plugins.difftool")
+
 return M
