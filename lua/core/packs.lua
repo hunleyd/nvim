@@ -51,4 +51,7 @@ require("plugins.ui2")
 -- meowsoot: Main colorscheme.
 require("plugins.meowsoot")
 
+-- mini.nvim: Collection of minimal, high-quality Lua modules.
+require("plugins.mini")
+
 return M
