@@ -155,3 +155,36 @@ mk.map_multistep("i", "<S-Tab>", {
 -- We add <BS><BS> to remove the trigger characters from the buffer.
 mk.map_combo("i", "jk", "<BS><BS><Esc>")
 mk.map_combo("i", "kj", "<BS><BS><Esc>")
+
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.pairs
+-- -----------------------------------------------------------------------------
+
+-- mini.pairs automatically manages character pairs (brackets, quotes, etc.)
+-- with smart neighbor-aware logic. We've combined common defaults with
+-- custom mappings for spaces, templates, and nested angle brackets.
+require("mini.pairs").setup({
+  mappings = {
+    -- Common Pairs
+    ["("] = { action = "open", pair = "()", neigh_pattern = "[^\\]." },
+    ["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\]." },
+    ["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\]." },
+
+    [")"] = { action = "close", pair = "()", neigh_pattern = "[^\\]." },
+    ["]"] = { action = "close", pair = "[]", neigh_pattern = "[^\\]." },
+    ["}"] = { action = "close", pair = "{}", neigh_pattern = "[^\\]." },
+
+    ['"'] = { action = "closeopen", pair = '""', neigh_pattern = "[^\\].", register = { cr = false } },
+    ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%w\\].", register = { cr = false } },
+    ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\].", register = { cr = false } },
+
+    -- Custom Mappings
+    -- Insert two spaces between brackets/braces when pressing Space.
+    [" "] = { action = "open", pair = "  ", neigh_pattern = "[%(%[{][%)%]}]" },
+    -- Pair percent signs when inside braces (useful for template tags).
+    ["%"] = { action = "open", pair = "%%", neigh_pattern = "[{][}]" },
+    -- Pair angle brackets only when inside braces.
+    ["<"] = { action = "open", pair = "<>", neigh_pattern = "[{][}]" },
+    [">"] = { action = "close", pair = "<>", neigh_pattern = "[{][}]" },
+  },
+})
