@@ -181,3 +181,16 @@ require("mini.pairs").setup({
     command = true,
   },
 })
+
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.splitjoin
+-- -----------------------------------------------------------------------------
+
+-- mini.splitjoin toggles between single-line and multi-line representations
+-- of code structures (like function arguments, lists, or tables).
+require("mini.splitjoin").setup({
+  mappings = {
+    -- Toggle between split and join (Normal and Visual modes).
+    toggle = "gS",
+  },
+})
