@@ -155,3 +155,25 @@ mk.map_multistep("i", "<S-Tab>", {
 -- We add <BS><BS> to remove the trigger characters from the buffer.
 mk.map_combo("i", "jk", "<BS><BS><Esc>")
 mk.map_combo("i", "kj", "<BS><BS><Esc>")
+
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.move
+-- -----------------------------------------------------------------------------
+
+-- mini.move allows moving any selection or the current line in any direction.
+-- It automatically handles re-indentation during vertical moves.
+require("mini.move").setup({
+  mappings = {
+    -- Move visual selection in Visual mode.
+    left = "<M-h>",
+    right = "<M-l>",
+    down = "<M-j>",
+    up = "<M-k>",
+
+    -- Move current line in Normal mode.
+    line_left = "<M-h>",
+    line_right = "<M-l>",
+    line_down = "<M-j>",
+    line_up = "<M-k>",
+  },
+})
