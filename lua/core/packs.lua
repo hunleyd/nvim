@@ -27,4 +27,7 @@ require("plugins.difftool")
 -- fzf.vim: Fuzzy finder integration.
 require("plugins.fzf")
 
+-- man.lua: Enhanced man page viewer.
+require("plugins.man")
+
 return M
