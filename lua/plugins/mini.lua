@@ -84,4 +84,8 @@ require("mini.completion").setup({
     info = 100,
     signature = 50,
   },
+
+  -- Action to take when LSP completion is not available.
+  -- <C-n> performs standard Neovim buffer-based completion.
+  fallback_action = "<C-n>",
 })
