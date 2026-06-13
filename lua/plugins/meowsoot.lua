@@ -6,8 +6,10 @@
 
 -- Load the plugin using the built-in package manager.
 vim.pack.add({
-  name = "meowsoot.nvim",
-  src = "https://github.com/marekh19/meowsoot.nvim",
+  {
+    name = "meowsoot.nvim",
+    src = "https://github.com/marekh19/meowsoot.nvim",
+  },
 })
 
 -- -----------------------------------------------------------------------------

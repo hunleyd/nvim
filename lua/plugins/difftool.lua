@@ -6,7 +6,7 @@
 -- It provides side-by-side diffs and directory comparisons.
 
 -- Load the optional nvim.difftool plugin using the built-in package manager.
-vim.pack.add({ name = "nvim.difftool" })
+vim.pack.add({ { name = "nvim.difftool" } })
 
 -- -----------------------------------------------------------------------------
 -- Keybindings

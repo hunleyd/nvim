@@ -9,8 +9,10 @@
 
 -- Load the mini.nvim collection using the built-in package manager.
 vim.pack.add({
-  name = "mini.nvim",
-  src = "https://github.com/echasnovski/mini.nvim",
+  {
+    name = "mini.nvim",
+    src = "https://github.com/echasnovski/mini.nvim",
+  },
 })
 
 -- -----------------------------------------------------------------------------

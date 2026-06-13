@@ -6,7 +6,7 @@
 -- It adds :Justify, :Left, :Right, and :Center commands.
 
 -- Load the optional justify plugin using the built-in package manager.
-vim.pack.add({ name = "justify" })
+vim.pack.add({ { name = "justify" } })
 
 -- -----------------------------------------------------------------------------
 -- Keybindings

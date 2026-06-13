@@ -6,7 +6,7 @@
 -- highlighting after a search is finished and the cursor moves or a timer expires.
 
 -- Load the optional nohlsearch plugin using the built-in package manager.
-vim.pack.add({ name = "nohlsearch" })
+vim.pack.add({ { name = "nohlsearch" } })
 
 -- -----------------------------------------------------------------------------
 -- Keybindings
