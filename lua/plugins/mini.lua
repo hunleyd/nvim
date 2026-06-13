@@ -212,3 +212,34 @@ require("mini.surround").setup({
     update_n_lines = "sn", -- Update search range
   },
 })
+
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.basics
+-- -----------------------------------------------------------------------------
+
+-- mini.basics provides sane editor defaults (options, mappings, autocommands).
+require("mini.basics").setup({
+  -- Options management.
+  options = {
+    -- Enable basic sane options (number, ignorecase, etc.).
+    basic = true,
+    -- Enable extra UI enhancements.
+    extra_ui = false,
+  },
+  -- Mappings management.
+  mappings = {
+    -- Enable basic sane mappings (Ctrl+S to save, etc.).
+    basic = true,
+    -- Enable option toggles (prefix: '\').
+    option_toggles = true,
+    -- Window navigation/resize mappings.
+    windows = true,
+    -- DISALBED: Moving cursor in Insert mode is not standard Vim.
+    move = false,
+  },
+  -- Autocommands management.
+  autocommands = {
+    -- Enable basic autocommands (Highlight on Yank, etc.).
+    basic = true,
+  },
+})
