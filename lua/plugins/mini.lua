@@ -97,6 +97,16 @@ require("mini.snippets").setup({
     -- Keep <C-c> as a way to manually stop a snippet session.
     stop = "<C-c>",
   },
+  -- Functions describing snippet expansion.
+  expand = {
+    -- Use fuzzy matching for snippet prefixes.
+    match = function(snippets)
+      return require("mini.snippets").default_match(snippets, {
+        -- Perform fuzzy match based on alphanumeric characters.
+        pattern_fuzzy = "%w*",
+      })
+    end,
+  },
 })
 
 -- Enable the LSP server for snippet integration
