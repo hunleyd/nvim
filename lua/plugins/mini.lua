@@ -145,3 +145,12 @@ mk.map_multistep("i", "<S-Tab>", {
     end,
   },
 })
+
+-- -----------------------------------------------------------------------------
+-- Keybindings: Escape Combos (via mini.keymap)
+-- -----------------------------------------------------------------------------
+
+-- 'jk' and 'kj' in Insert mode to Escape.
+-- Unlike standard mappings, these type the first key immediately for zero lag.
+mk.map_combo("i", "jk", "<Esc>")
+mk.map_combo("i", "kj", "<Esc>")
