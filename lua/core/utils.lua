@@ -89,35 +89,4 @@ M.notify = function(msg, level, opts)
   end, timeout)
 end
 
--- -----------------------------------------------------------------------------
--- Completion Helpers (mini.completion)
--- -----------------------------------------------------------------------------
-
---- Check if the cursor is at the start of a line or after whitespace.
---- Useful for smart Tab behavior.
-local check_backspace = function()
-  local col = vim.fn.col(".") - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
-end
-
---- Logic for smart <Tab> mapping.
-M.smart_tab = function()
-  if vim.fn.pumvisible() == 1 then
-    return vim.api.nvim_replace_termcodes("<C-n>", true, true, true)
-  elseif check_backspace() then
-    return vim.api.nvim_replace_termcodes("<Tab>", true, true, true)
-  else
-    return require("mini.completion").completefunc_twostep()
-  end
-end
-
---- Logic for smart <S-Tab> mapping.
-M.smart_s_tab = function()
-  if vim.fn.pumvisible() == 1 then
-    return vim.api.nvim_replace_termcodes("<C-p>", true, true, true)
-  else
-    return vim.api.nvim_replace_termcodes("<S-Tab>", true, true, true)
-  end
-end
-
 return M

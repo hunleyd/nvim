@@ -1,0 +1,16 @@
+{
+  "plugins": {
+    "friendly-snippets": {
+      "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
+    "meowsoot.nvim": {
+      "rev": "b0a3d2cbdd54c7119551c8069066f2c731a0eb04",
+      "src": "https://github.com/marekh19/meowsoot.nvim"
+    },
+    "mini.nvim": {
+      "rev": "a59a9b7fb0a42cbcf022938ee5f0724320b66f63",
+      "src": "https://github.com/echasnovski/mini.nvim"
+    }
+  }
+}

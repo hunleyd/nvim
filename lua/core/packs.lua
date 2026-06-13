@@ -51,4 +51,12 @@ require("plugins.meowsoot")
 -- mini.nvim: Collection of minimal, high-quality Lua modules.
 require("plugins.mini")
 
+-- friendly-snippets: A collection of common snippets for many languages.
+vim.pack.add({
+  {
+    name = "friendly-snippets",
+    src = "https://github.com/rafamadriz/friendly-snippets",
+  },
+})
+
 return M
