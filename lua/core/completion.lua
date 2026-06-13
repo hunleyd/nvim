@@ -10,8 +10,8 @@
 -- Configuration
 -- -----------------------------------------------------------------------------
 
--- Enable automatic completion as you type.
-vim.opt.autocomplete = true
+-- Disable built-in autocomplete as we are switching to mini.completion.
+vim.opt.autocomplete = false
 
 -- Configure the completion menu behavior:
 -- menuone : Show the menu even if there is only one match.
