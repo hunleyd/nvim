@@ -338,6 +338,26 @@ require("mini.cmdline").setup({
   peek = { delay = 100 },
 })
 
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.diff
+-- -----------------------------------------------------------------------------
+
+-- mini.diff provides live gutter signs and in-buffer diff overlays.
+-- It tracks changes against the Git index by default.
+require("mini.diff").setup({
+  -- Use signs in the gutter (signcolumn).
+  view = {
+    style = "sign",
+    -- Use a clean solid bar for all change types.
+    signs = { add = "┃", change = "┃", delete = "┃" },
+  },
+})
+
+-- Mapping to toggle the detailed in-buffer diff overlay.
+vim.keymap.set("n", "<leader>go", function()
+  require("mini.diff").toggle_overlay(0)
+end, { desc = "Toggle Diff Overlay" })
+
 -- Build keyboard habits: Disable mouse support entirely.
 vim.opt.mouse = ""
 
