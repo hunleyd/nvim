@@ -358,6 +358,20 @@ vim.keymap.set("n", "<leader>go", function()
   require("mini.diff").toggle_overlay(0)
 end, { desc = "Toggle Diff Overlay" })
 
+-- Always-on Overlay: Automatically enable the diff overlay for every buffer.
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MiniDiffUpdated",
+  callback = function(data)
+    local buf_id = data.buf
+    -- Ensure we only auto-toggle once per buffer to avoid infinite loops
+    -- or annoying behavior when manually toggling.
+    if not vim.b[buf_id].minidiff_overlay_auto_enabled then
+      require("mini.diff").toggle_overlay(buf_id)
+      vim.b[buf_id].minidiff_overlay_auto_enabled = true
+    end
+  end,
+})
+
 -- Build keyboard habits: Disable mouse support entirely.
 vim.opt.mouse = ""
 
