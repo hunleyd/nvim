@@ -36,7 +36,7 @@ M.notify = function(msg, level, opts)
   local level_map = {
     [vim.log.levels.INFO] = { title = " Info ", hl = "DiagnosticInfo", timeout = 3000 },
     [vim.log.levels.WARN] = { title = " Warning ", hl = "DiagnosticWarn", timeout = 10000 },
-    [vim.log.levels.ERROR] = { title = " Error ", hl = "DiagnosticError", timeout = 0 },
+    [vim.log.levels.ERROR] = { title = " Error ", hl = "DiagnosticError", timeout = 30000 },
     [vim.log.levels.DEBUG] = { title = " Debug ", hl = "Comment", timeout = 3000 },
     [vim.log.levels.TRACE] = { title = " Trace ", hl = "Comment", timeout = 3000 },
   }
