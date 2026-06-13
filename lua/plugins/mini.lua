@@ -376,6 +376,12 @@ require("mini.jump2d").setup({
 -- Mapping: <leader>j to start jumping to word starts.
 vim.keymap.set("n", "<leader>j", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>", { desc = "Jump 2D (Words)" })
 
+-- Mapping: <leader>jc to jump to a specific character.
+vim.keymap.set("n", "<leader>jc", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>", { desc = "Jump 2D (Character)" })
+
+-- Mapping: <leader>jl to jump to the start of visible lines.
+vim.keymap.set("n", "<leader>jl", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.line_start)<CR>", { desc = "Jump 2D (Lines)" })
+
 -- -----------------------------------------------------------------------------
 -- Configuration: mini.clue
 -- -----------------------------------------------------------------------------
