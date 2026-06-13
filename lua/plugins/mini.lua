@@ -385,7 +385,7 @@ vim.keymap.set("n", "<leader>jc", function()
       -- Target only the first character entered.
       local char = input:sub(1, 1)
       -- Generate a spotter for that specific character.
-      local spotter = jump2d.gen_pattern_spotter(vim.pesc(char))
+      local spotter = jump2d.gen_spotter.pattern(vim.pesc(char))
       -- Start the 2D jump session.
       jump2d.start({ spotter = spotter })
     end
