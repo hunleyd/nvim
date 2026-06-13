@@ -243,3 +243,6 @@ require("mini.basics").setup({
     basic = true,
   },
 })
+
+-- Build keyboard habits: Disable mouse support entirely.
+vim.opt.mouse = ""
