@@ -87,6 +87,8 @@ require("mini.snippets").setup({
     gen_loader.from_runtime(".*%.code-snippets$"),
     gen_loader.from_runtime(".*%.lua$"),
   },
+  -- Visual feedback during interactive sessions (default: true).
+  -- Shows virtual text for unvisited tabstops and highlights the current one.
 })
 
 -- Enable the LSP server for snippet integration
