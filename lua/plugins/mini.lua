@@ -21,6 +21,22 @@ vim.pack.add({
 require("mini.extra").setup({})
 
 -- -----------------------------------------------------------------------------
+-- Configuration: mini.git (Git Integration)
+-- -----------------------------------------------------------------------------
+
+-- mini.git provides high-level git management (staging, committing)
+-- and automated repository tracking.
+require("mini.git").setup({})
+
+-- Mapping: <leader>gs to show git information for the item under the cursor.
+vim.keymap.set("n", "<leader>gs", function()
+  require("mini.git").show_at_cursor()
+end, { desc = "Show Git at Cursor" })
+
+-- Mapping: <leader>gc to initiate a git commit.
+vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", { desc = "Git Commit" })
+
+-- -----------------------------------------------------------------------------
 -- Configuration: mini.files (File Explorer)
 -- -----------------------------------------------------------------------------
 
