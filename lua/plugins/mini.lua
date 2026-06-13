@@ -356,6 +356,27 @@ require("mini.jump").setup({
 })
 
 -- -----------------------------------------------------------------------------
+-- Configuration: mini.jump2d
+-- -----------------------------------------------------------------------------
+
+-- mini.jump2d provides 2D jumping to any visible word start or character.
+require("mini.jump2d").setup({
+  -- Custom mappings.
+  mappings = {
+    -- Disable default <CR> mapping as it's often intrusive.
+    start_jumping = "",
+  },
+  -- Visual options.
+  view = {
+    -- Do not dim lines; keeps the UI clean.
+    dim = false,
+  },
+})
+
+-- Mapping: <leader>j to start jumping to word starts.
+vim.keymap.set("n", "<leader>j", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>", { desc = "Jump 2D (Words)" })
+
+-- -----------------------------------------------------------------------------
 -- Configuration: mini.clue
 -- -----------------------------------------------------------------------------
 
