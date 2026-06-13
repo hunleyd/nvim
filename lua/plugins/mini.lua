@@ -36,6 +36,9 @@ end, { desc = "Show Git at Cursor" })
 -- Mapping: <leader>gc to initiate a git commit.
 vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", { desc = "Git Commit" })
 
+-- Mapping: <leader>gb to blame the current file.
+vim.keymap.set("n", "<leader>gb", ":Git blame -- %<CR>", { desc = "Git Blame" })
+
 -- -----------------------------------------------------------------------------
 -- Configuration: mini.files (File Explorer)
 -- -----------------------------------------------------------------------------
