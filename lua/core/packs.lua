@@ -12,11 +12,7 @@ local M = {}
 -- Plugin Specifications
 -- -----------------------------------------------------------------------------
 
--- Example of how to add a plugin:
--- vim.pack.add({
---     src = "https://github.com/username/plugin-name",
---     -- Other options like branch, rev, etc.
--- })
--- require("plugins.plugin-name")
+-- justify: Built-in text alignment commands.
+require("plugins.justify")
 
 return M
