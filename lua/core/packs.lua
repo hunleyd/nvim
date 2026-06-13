@@ -15,4 +15,7 @@ local M = {}
 -- justify: Built-in text alignment commands.
 require("plugins.justify")
 
+-- matchit: Extended % matching for HTML, if/else, etc.
+require("plugins.matchit")
+
 return M
