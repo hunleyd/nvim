@@ -244,6 +244,19 @@ require("mini.basics").setup({
   },
 })
 
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.bracketed
+-- -----------------------------------------------------------------------------
+
+-- mini.bracketed provides unified bracket mappings ( [ and ] ) for navigating
+-- common targets like buffers, diagnostics, treesitter nodes, etc.
+require("mini.bracketed").setup({
+  -- All targets are enabled by default with standard suffixes:
+  -- b: Buffer, c: Comment, d: Diagnostic, f: File, i: Indent,
+  -- j: Jump, l: Location, o: Oldfile, q: Quickfix, t: Treesitter,
+  -- u: Undo, w: Window, x: Conflict, y: Yank
+})
+
 -- Build keyboard habits: Disable mouse support entirely.
 vim.opt.mouse = ""
 
