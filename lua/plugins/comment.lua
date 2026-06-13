@@ -10,16 +10,12 @@
 -- Configuration
 -- -----------------------------------------------------------------------------
 
--- Enable and configure the built-in commenting.
-require("vim._comment").setup({
-  -- Add a space between the comment character and the line content.
-  add_space = true,
-  -- Do not comment empty lines.
-  ignore_empty_lines = true,
-})
+-- In Neovim v0.12, the built-in commenting is enabled by default and 
+-- does not currently expose a .setup() function for configuration.
+-- It follows standard 'gc' and 'gcc' mappings.
 
 -- -----------------------------------------------------------------------------
--- Default Mappings (provided by the module):
+-- Default Mappings (provided by the core):
 -- -----------------------------------------------------------------------------
 -- gcc      : Toggle comment on the current line (Normal mode).
 -- gc{motion} : Toggle comment based on a motion (Normal mode).

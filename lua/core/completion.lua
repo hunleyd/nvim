@@ -10,8 +10,8 @@
 -- Configuration
 -- -----------------------------------------------------------------------------
 
--- Enable automatic completion for all sources (LSP, Buffer, Tags, etc.).
-vim.opt.autocomplete = "all"
+-- Enable automatic completion as you type.
+vim.opt.autocomplete = true
 
 -- Configure the completion menu behavior:
 -- menuone : Show the menu even if there is only one match.

@@ -5,8 +5,8 @@
 -- justify is an optional built-in plugin that provides commands to align text.
 -- It adds :Justify, :Left, :Right, and :Center commands.
 
--- Load the optional justify plugin using the built-in package manager.
-vim.pack.add({ { name = "justify" } })
+-- Load the optional justify plugin.
+vim.cmd.packadd("justify")
 
 -- -----------------------------------------------------------------------------
 -- Keybindings

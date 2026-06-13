@@ -5,8 +5,8 @@
 -- nvim.difftool is a modern built-in directory and file comparison tool.
 -- It provides side-by-side diffs and directory comparisons.
 
--- Load the optional nvim.difftool plugin using the built-in package manager.
-vim.pack.add({ { name = "nvim.difftool" } })
+-- Load the optional nvim.difftool plugin.
+vim.cmd.packadd("nvim.difftool")
 
 -- -----------------------------------------------------------------------------
 -- Keybindings
