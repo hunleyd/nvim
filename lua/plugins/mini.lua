@@ -246,5 +246,6 @@ require("mini.basics").setup({
 
 -- Build keyboard habits: Disable mouse support entirely.
 vim.opt.mouse = ""
-le characters (tabs, trailing spaces).
+
+-- Clean UI: Disable showing invisible characters (tabs, trailing spaces).
 vim.opt.list = false
