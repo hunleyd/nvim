@@ -18,4 +18,7 @@ require("plugins.justify")
 -- matchit: Extended % matching for HTML, if/else, etc.
 require("plugins.matchit")
 
+-- nohlsearch: Automatically clear search highlights.
+require("plugins.nohlsearch")
+
 return M
