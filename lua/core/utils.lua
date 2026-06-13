@@ -30,20 +30,20 @@ M.notify = function(msg, level, opts)
 
   opts = opts or {}
   level = level or vim.log.levels.INFO
-  local timeout = opts.timeout or 3000
   local title = opts.title or " System "
 
-  -- Map levels to titles and highlights
+  -- Map levels to titles, highlights, and timeouts
   local level_map = {
-    [vim.log.levels.INFO] = { title = " Info ", hl = "DiagnosticInfo" },
-    [vim.log.levels.WARN] = { title = " Warning ", hl = "DiagnosticWarn" },
-    [vim.log.levels.ERROR] = { title = " Error ", hl = "DiagnosticError" },
-    [vim.log.levels.DEBUG] = { title = " Debug ", hl = "Comment" },
-    [vim.log.levels.TRACE] = { title = " Trace ", hl = "Comment" },
+    [vim.log.levels.INFO] = { title = " Info ", hl = "DiagnosticInfo", timeout = 3000 },
+    [vim.log.levels.WARN] = { title = " Warning ", hl = "DiagnosticWarn", timeout = 10000 },
+    [vim.log.levels.ERROR] = { title = " Error ", hl = "DiagnosticError", timeout = 0 },
+    [vim.log.levels.DEBUG] = { title = " Debug ", hl = "Comment", timeout = 3000 },
+    [vim.log.levels.TRACE] = { title = " Trace ", hl = "Comment", timeout = 3000 },
   }
 
   local config = level_map[level] or level_map[vim.log.levels.INFO]
   title = opts.title or config.title
+  local timeout = opts.timeout or config.timeout
 
   local buf = vim.api.nvim_create_buf(false, true)
 
@@ -81,12 +81,14 @@ M.notify = function(msg, level, opts)
   vim.api.nvim_set_hl(0, "NotifyBorder", { link = config.hl })
   vim.wo[win].winhl = "Normal:NotifyWin,FloatBorder:NotifyBorder"
 
-  -- Auto-close after timeout
-  vim.defer_fn(function()
-    if vim.api.nvim_win_is_valid(win) then
-      vim.api.nvim_win_close(win, true)
-    end
-  end, timeout)
+  -- Auto-close after timeout (if timeout > 0)
+  if timeout > 0 then
+    vim.defer_fn(function()
+      if vim.api.nvim_win_is_valid(win) then
+        vim.api.nvim_win_close(win, true)
+      end
+    end, timeout)
+  end
 end
 
 return M
