@@ -21,6 +21,37 @@ vim.pack.add({
 require("mini.extra").setup({})
 
 -- -----------------------------------------------------------------------------
+-- Configuration: mini.files (File Explorer)
+-- -----------------------------------------------------------------------------
+
+-- mini.files is a buffer-based file explorer that treats the filesystem
+-- like text. It uses Miller Columns for navigation.
+require("mini.files").setup({
+  windows = {
+    -- Maximum number of side-by-side windows to show.
+    max_number = math.huge,
+    -- Enable file preview window to the right.
+    preview = true,
+    -- Column widths.
+    width_focus = 30,
+    width_nofocus = 15,
+    width_preview = 30,
+  },
+  options = {
+    -- Use mini.files as the default explorer (replaces netrw).
+    use_as_default_explorer = true,
+  },
+})
+
+-- Mapping: <leader>e to open file explorer at the current buffer's directory.
+vim.keymap.set("n", "<leader>e", function()
+  -- If the buffer has no name (e.g., new file), open at CWD.
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  local path = (buf_name ~= "" and buf_name) or vim.fn.getcwd()
+  require("mini.files").open(path, true)
+end, { desc = "Open File Explorer" })
+
+-- -----------------------------------------------------------------------------
 -- Configuration: mini.ai (Extended Text Objects)
 -- -----------------------------------------------------------------------------
 
