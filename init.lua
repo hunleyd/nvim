@@ -15,5 +15,6 @@
 -- We will follow a modular approach by placing logic in the 'lua/' directory.
 _G.Utils = require("core.utils")
 require("core.packs")
+require("core.completion")
 
 print("Neovim configuration initialized.")
