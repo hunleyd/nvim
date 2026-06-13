@@ -368,8 +368,8 @@ require("mini.jump2d").setup({
   },
   -- Visual options.
   view = {
-    -- Do not dim lines; keeps the UI clean.
-    dim = false,
+    -- Dim lines; makes targets and labels pop.
+    dim = true,
   },
 })
 
