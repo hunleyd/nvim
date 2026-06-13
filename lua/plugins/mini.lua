@@ -30,3 +30,19 @@ require("mini.ai").setup({
   -- q: Quote (", ', `)
   -- b: Bracket ((), [], {})
 })
+
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.align
+-- -----------------------------------------------------------------------------
+
+-- mini.align provides interactive structural alignment of code and data.
+-- It is more powerful than the built-in 'justify' as it supports 
+-- live previews and complex splitting patterns.
+require("mini.align").setup({
+  mappings = {
+    -- Start interactive alignment (Visual mode).
+    start = "ga",
+    -- Start interactive alignment with live preview (Visual mode).
+    start_with_preview = "gA",
+  },
+})
