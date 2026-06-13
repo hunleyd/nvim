@@ -46,3 +46,21 @@ require("mini.align").setup({
     start_with_preview = "gA",
   },
 })
+
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.comment
+-- -----------------------------------------------------------------------------
+
+-- mini.comment provides fast, dot-repeatable commenting with 
+-- Tree-sitter support and a dedicated 'gc' textobject.
+require("mini.comment").setup({
+  -- Mappings for commenting actions.
+  mappings = {
+    -- Toggle comment on current line.
+    comment_line = "gcc",
+    -- Toggle comment on visual selection.
+    comment_visual = "gc",
+    -- Define 'comment' textobject (e.g., 'dgc' to delete comment block).
+    textobject = "gc",
+  },
+})
