@@ -33,4 +33,7 @@ require("plugins.man")
 -- matchparen: Highlight matching brackets.
 require("plugins.matchparen")
 
+-- osc52: Native OSC 52 clipboard support.
+require("plugins.osc52")
+
 return M
