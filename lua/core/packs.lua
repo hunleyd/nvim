@@ -42,9 +42,6 @@ require("plugins.shada")
 -- spellfile: Automatic management of spell-check dictionaries.
 require("plugins.spellfile")
 
--- comment: Native commenting support.
-require("plugins.comment")
-
 -- ui2: Experimental modernized UI architecture.
 require("plugins.ui2")
 
