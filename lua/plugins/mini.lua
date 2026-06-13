@@ -89,6 +89,14 @@ require("mini.snippets").setup({
   },
   -- Visual feedback during interactive sessions (default: true).
   -- Shows virtual text for unvisited tabstops and highlights the current one.
+  mappings = {
+    -- We disable these as we use the smart <Tab> system in mini.keymap.
+    expand = "",
+    jump_next = "",
+    jump_prev = "",
+    -- Keep <C-c> as a way to manually stop a snippet session.
+    stop = "<C-c>",
+  },
 })
 
 -- Enable the LSP server for snippet integration
