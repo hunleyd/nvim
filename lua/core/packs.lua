@@ -39,4 +39,7 @@ require("plugins.osc52")
 -- shada: Shared data (history, marks, registers) persistence.
 require("plugins.shada")
 
+-- spellfile: Automatic management of spell-check dictionaries.
+require("plugins.spellfile")
+
 return M
