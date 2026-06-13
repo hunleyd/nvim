@@ -13,10 +13,34 @@ vim.pack.add({
 })
 
 -- -----------------------------------------------------------------------------
+-- Configuration: mini.extra (Supplementary Features)
+-- -----------------------------------------------------------------------------
+
+-- mini.extra provides non-essential but very useful features that complement
+-- other mini modules, such as extra textobjects and pickers.
+require("mini.extra").setup({})
+
+-- -----------------------------------------------------------------------------
 -- Configuration: mini.ai (Extended Text Objects)
 -- -----------------------------------------------------------------------------
 
-require("mini.ai").setup({
+-- mini.ai extends Neovim's text objects (around 'a', inside 'i') with 
+-- smarter search and next/last variants.
+local ai = require("mini.ai")
+local extra = require("mini.extra")
+ai.setup({
+  -- Custom textobjects from mini.extra.
+  custom_textobjects = {
+    -- i: Indentation (around/inside indentation level)
+    i = extra.gen_ai_spec.indent(),
+    -- b: Buffer (around/inside entire buffer)
+    e = extra.gen_ai_spec.buffer(),
+    -- d: Diagnostic (around/inside error/warning)
+    d = extra.gen_ai_spec.diagnostic(),
+    -- n: Number (around/inside a number)
+    n = extra.gen_ai_spec.number(),
+  },
+  -- Number of lines within which to look for a text object.
   n_lines = 500,
 })
 
