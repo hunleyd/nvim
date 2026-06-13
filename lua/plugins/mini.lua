@@ -152,5 +152,6 @@ mk.map_multistep("i", "<S-Tab>", {
 
 -- 'jk' and 'kj' in Insert mode to Escape.
 -- Unlike standard mappings, these type the first key immediately for zero lag.
-mk.map_combo("i", "jk", "<Esc>")
-mk.map_combo("i", "kj", "<Esc>")
+-- We add <BS><BS> to remove the trigger characters from the buffer.
+mk.map_combo("i", "jk", "<BS><BS><Esc>")
+mk.map_combo("i", "kj", "<BS><BS><Esc>")
