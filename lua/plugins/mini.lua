@@ -103,3 +103,12 @@ require("mini.completion").setup({
     signature = { border = "rounded", winblend = 0 },
   },
 })
+
+-- -----------------------------------------------------------------------------
+-- Keybindings: mini.completion
+-- -----------------------------------------------------------------------------
+
+-- Smart <Tab> and <S-Tab> mappings for completion navigation and indentation.
+-- Uses expr = true to dynamically decide the result of the keypress.
+vim.keymap.set("i", "<Tab>", "v:lua.Utils.smart_tab()", { expr = true, noremap = true })
+vim.keymap.set("i", "<S-Tab>", "v:lua.Utils.smart_s_tab()", { expr = true, noremap = true })
