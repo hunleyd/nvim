@@ -71,3 +71,17 @@ require("mini.comment").setup({
     ignore_blank_line = true,
   },
 })
+
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.completion
+-- -----------------------------------------------------------------------------
+
+-- mini.completion provides asynchronous autocompletion and signature help.
+require("mini.completion").setup({
+  -- Delay (in ms) before showing completion popups.
+  delay = {
+    completion = 100,
+    info = 100,
+    signature = 50,
+  },
+})
