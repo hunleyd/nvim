@@ -88,4 +88,12 @@ require("mini.completion").setup({
   -- Action to take when LSP completion is not available.
   -- <C-n> performs standard Neovim buffer-based completion.
   fallback_action = "<C-n>",
+
+  -- LSP completion behavior.
+  lsp_completion = {
+    -- Function to use for LSP completion.
+    source_func = "completefunc",
+    -- Automatically set up completion for every attached LSP client.
+    auto_setup = true,
+  },
 })
