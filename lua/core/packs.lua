@@ -36,4 +36,7 @@ require("plugins.matchparen")
 -- osc52: Native OSC 52 clipboard support.
 require("plugins.osc52")
 
+-- shada: Shared data (history, marks, registers) persistence.
+require("plugins.shada")
+
 return M
