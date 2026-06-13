@@ -257,6 +257,74 @@ require("mini.bracketed").setup({
   -- u: Undo, w: Window, x: Conflict, y: Yank
 })
 
+-- -----------------------------------------------------------------------------
+-- Configuration: mini.clue
+-- -----------------------------------------------------------------------------
+
+-- mini.clue shows a floating window with available keybinding hints
+-- when a trigger key (like <Leader> or 'g') is pressed.
+local miniclue = require("mini.clue")
+miniclue.setup({
+  triggers = {
+    -- Leader triggers.
+    { mode = "n", keys = "<Leader>" },
+    { mode = "x", keys = "<Leader>" },
+
+    -- Built-in completion.
+    { mode = "i", keys = "<C-x>" },
+
+    -- 'g' key.
+    { mode = "n", keys = "g" },
+    { mode = "x", keys = "g" },
+
+    -- Marks.
+    { mode = "n", keys = "'" },
+    { mode = "n", keys = "`" },
+    { mode = "x", keys = "'" },
+    { mode = "x", keys = "`" },
+
+    -- Registers.
+    { mode = "n", keys = '"' },
+    { mode = "x", keys = '"' },
+    { mode = "i", keys = "<C-r>" },
+    { mode = "c", keys = "<C-r>" },
+
+    -- Window commands.
+    { mode = "n", keys = "<C-w>" },
+
+    -- 'z' key.
+    { mode = "n", keys = "z" },
+    { mode = "x", keys = "z" },
+
+    -- Bracketed navigation.
+    { mode = "n", keys = "[" },
+    { mode = "n", keys = "]" },
+    { mode = "x", keys = "[" },
+    { mode = "x", keys = "]" },
+  },
+
+  clues = {
+    -- Enhance built-in descriptions.
+    miniclue.gen_clues.builtin_completion(),
+    miniclue.gen_clues.g(),
+    miniclue.gen_clues.marks(),
+    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.windows(),
+    miniclue.gen_clues.z(),
+  },
+
+  -- Window configuration to match UI2 and meowsoot.
+  window = {
+    -- Delay (in ms) before showing the clue window.
+    delay = 500,
+    config = {
+      border = "rounded",
+      -- Solid background.
+      winblend = 0,
+    },
+  },
+})
+
 -- Build keyboard habits: Disable mouse support entirely.
 vim.opt.mouse = ""
 
