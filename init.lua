@@ -3,6 +3,10 @@
 -- Target: Neovim v0.12+ (UI2 support)
 -- =============================================================================
 
+-- Set the leader key to Space.
+-- This must be set before any plugins are loaded to ensure mappings work correctly.
+vim.g.mapleader = " "
+
 -- This is the entry point for Neovim configuration.
 -- In Neovim v0.12, we can leverage the new UI2 architecture for enhanced
 -- rendering and interaction.
