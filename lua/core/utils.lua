@@ -18,77 +18,60 @@ M.get_root = function()
   return vim.fs.root(0, { ".git", "package.json", "go.mod", "Cargo.toml", "init.lua" })
 end
 
---- Display a transient floating notification.
+-- Save the original vim.notify at module load time to avoid recursion
+local original_notify = vim.notify
+
+--- Display a transient floating notification using mini.notify.
 --- @param msg string|table: The message to display.
 --- @param level number|string|nil: The log level (e.g., vim.log.levels.INFO).
---- @param opts table|nil: Optional settings (title, timeout).
+--- @param opts table|nil: Optional settings (title, timeout, id).
 M.notify = function(msg, level, opts)
-  -- Convert message to string if it's not one (handles tables/numbers)
+  -- Convert message to string if it's not one
   if type(msg) ~= "string" then
     msg = vim.inspect(msg)
   end
 
   opts = opts or {}
   level = level or vim.log.levels.INFO
-  local title = opts.title or " System "
 
-  -- Map levels to titles, highlights, and timeouts
+  -- Map levels to timeouts and icons
   local level_map = {
-    [vim.log.levels.INFO] = { title = " Info ", hl = "DiagnosticInfo", timeout = 3000 },
-    [vim.log.levels.WARN] = { title = " Warning ", hl = "DiagnosticWarn", timeout = 10000 },
-    [vim.log.levels.ERROR] = { title = " Error ", hl = "DiagnosticError", timeout = 30000 },
-    [vim.log.levels.DEBUG] = { title = " Debug ", hl = "Comment", timeout = 3000 },
-    [vim.log.levels.TRACE] = { title = " Trace ", hl = "Comment", timeout = 3000 },
+    [vim.log.levels.INFO] = { icon = "󰋽", timeout = 3000, key = "INFO" },
+    [vim.log.levels.WARN] = { icon = "󰀦", timeout = 10000, key = "WARN" },
+    [vim.log.levels.ERROR] = { icon = "󰅙", timeout = 30000, key = "ERROR" },
+    [vim.log.levels.DEBUG] = { icon = "󰃤", timeout = 3000, key = "DEBUG" },
+    [vim.log.levels.TRACE] = { icon = "󰙔", timeout = 3000, key = "TRACE" },
   }
 
   local config = level_map[level] or level_map[vim.log.levels.INFO]
-  title = opts.title or config.title
   local timeout = opts.timeout or config.timeout
+  local icon = config.icon
+  local level_key = config.key
 
-  local buf = vim.api.nvim_create_buf(false, true)
-
-  -- Split message into lines for multi-line support
-  local lines = {}
-  for s in msg:gmatch("[^\r\n]+") do
-    table.insert(lines, "  " .. s .. "  ")
+  -- Ensure mini.notify is loaded (it might be called during early init)
+  local ok, mininotify = pcall(require, "mini.notify")
+  if not ok then
+    -- Fallback to the original notify (captured before any overrides)
+    return original_notify(msg, level, opts)
   end
 
-  local max_line_width = 0
-  for _, line in ipairs(lines) do
-    max_line_width = math.max(max_line_width, #line)
+  local full_msg = icon .. " " .. msg
+  local id = opts.id
+
+  if id and mininotify.get(id) then
+    mininotify.update(id, { msg = full_msg, level = level_key })
+  else
+    id = mininotify.add(full_msg, level_key)
   end
 
-  local width = math.max(max_line_width, #title) + 2
-  local height = #lines
-
-  local win_opts = {
-    relative = "editor",
-    width = width,
-    height = height,
-    col = vim.o.columns - width - 2,
-    row = 1,
-    style = "minimal",
-    border = "rounded",
-    title = title,
-    title_pos = "center",
-  }
-
-  local win = vim.api.nvim_open_win(buf, false, win_opts)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-
-  -- Highlight consistent with meowsoot
-  vim.api.nvim_set_hl(0, "NotifyWin", { link = "NormalFloat" })
-  vim.api.nvim_set_hl(0, "NotifyBorder", { link = config.hl })
-  vim.wo[win].winhl = "Normal:NotifyWin,FloatBorder:NotifyBorder"
-
-  -- Auto-close after timeout (if timeout > 0)
+  -- Auto-remove after timeout
   if timeout > 0 then
     vim.defer_fn(function()
-      if vim.api.nvim_win_is_valid(win) then
-        vim.api.nvim_win_close(win, true)
-      end
+      mininotify.remove(id)
     end, timeout)
   end
+
+  return id
 end
 
 return M

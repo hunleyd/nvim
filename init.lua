@@ -11,6 +11,54 @@ vim.g.mapleader = " "
 -- In Neovim v0.12, we can leverage the new UI2 architecture for enhanced
 -- rendering and interaction.
 
+-- Override vim.api.nvim_echo and other output methods to route direct calls
+-- through our floating notification system. This is done early to capture
+-- messages from plugins that load during startup (like nvim-treesitter).
+local original_echo = vim.api.nvim_echo
+vim.api.nvim_echo = function(chunks, history, opts)
+  -- If we're in headless mode, fall back to the original echo for CLI output.
+  if #vim.api.nvim_list_uis() == 0 then
+    return original_echo(chunks, history, opts)
+  end
+
+  local msg = ""
+  for _, chunk in ipairs(chunks) do
+    msg = msg .. tostring(chunk[1])
+  end
+
+  -- Determine level based on common highlight groups used in echo
+  local level = vim.log.levels.INFO
+  for _, chunk in ipairs(chunks) do
+    local hl = chunk[2]
+    if hl == "ErrorMsg" or hl == "Error" then
+      level = vim.log.levels.ERROR
+      break
+    elseif hl == "WarningMsg" or hl == "Warning" then
+      level = vim.log.levels.WARN
+    end
+  end
+
+  -- We use a deferred call to ensure Utils is loaded if this is called extremely early.
+  vim.schedule(function()
+    if _G.Utils and _G.Utils.notify then
+      _G.Utils.notify(msg, level, { title = " System " })
+    else
+      -- Fallback if Utils is not yet available
+      vim.notify(msg, level)
+    end
+  end)
+end
+
+-- Override the global print function to also use floating notifications.
+_G.print = function(...)
+  local args = { ... }
+  local msg = ""
+  for i, arg in ipairs(args) do
+    msg = msg .. (i > 1 and " " or "") .. tostring(arg)
+  end
+  vim.notify(msg, vim.log.levels.INFO, { title = " Message " })
+end
+
 -- -----------------------------------------------------------------------------
 -- Initial Setup
 -- -----------------------------------------------------------------------------
@@ -25,16 +73,6 @@ _G.Utils = require("core.utils")
 
 -- Override vim.notify to use our transient floating popup system.
 vim.notify = Utils.notify
-
--- Override the global print function to also use floating notifications.
-_G.print = function(...)
-  local args = { ... }
-  local msg = ""
-  for i, arg in ipairs(args) do
-    msg = msg .. (i > 1 and " " or "") .. tostring(arg)
-  end
-  Utils.notify(msg, vim.log.levels.INFO, { title = " Message " })
-end
 
 require("core.packs")
 require("core.completion")

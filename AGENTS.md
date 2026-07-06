@@ -1,0 +1,21 @@
+# Neovim Configuration Project Instructions
+
+- **Target Version**: Neovim v0.12+ with UI2 support.
+- **Package Management**: Use built-in `vim.pack`.
+- **Modularity**: Place logic in `lua/core/` and individual plugin configurations in `lua/plugins/`.
+- **Visual Consistency**: All UI elements, highlight groups, and color adjustments **MUST** align with the `meowsoot` colorscheme.
+- **Message Handling**: All messages (handled via `print` and `vim.notify`) **MUST** be routed through the transient floating popup system (`Utils.notify`).
+- **Module Reviews**: When adding new `mini.nvim` modules, you **MUST** review `mini.extra` to see if there are any complementary features (like pickers or textobjects) that should be enabled and present them for approval.
+- **Miscellaneous Integration**: When adding new `mini.nvim` modules, check if `mini.misc` provides any specific integration or helper functions (e.g., statusline components, specialized automations) and include them if relevant.
+- **Documentation**: A dual-layered documentation strategy is required:
+    - **Internal Code Comments**: All code and configuration files **MUST** be heavily commented internally. Comments should explain the "why" and "how" of the logic for maintainability.
+    - **External Help Files (`mini.doc`)**: All custom modules and significant configuration logic **MUST** also be documented using the `mini.doc` annotation system to generate searchable Neovim help files.
+    - **Annotations**: Use EmmyLua-style `---` comments with relevant tags (`@tag`, `@param`, `@return`, etc.) for help file generation.
+    - **Private Logic**: Mark internal helpers or private state with `@private` to exclude them from the public help files.
+    - **Generation**: After making changes, run `nvim --headless -u init.lua -S scripts/generate_docs.lua` to update the project help file (`doc/myconfig.txt`).
+    - **Searchability**: Ensure that all public functions and commands have unique `@tag` entries to make them searchable via `:help`.
+- **Verification**: All configuration changes **MUST** be empirically verified using the `mini.test` framework located in the `tests/` directory. 
+    - **Isolation**: Each test must run in an isolated child Neovim process (via `child.start()` or `child.restart()`) to simulate a clean startup sequence and catch initialization-specific errors.
+    - **Visual Regression**: For any UI-impacting changes (statuslines, tablines, dashboard, etc.), you **MUST** implement or update visual regression tests using `MiniTest.expect.reference_screenshot()`.
+    - **Matrix Testing**: Verification suites must test against a matrix of relevant buffer types (regular files, `'nofile'`, and `'terminal'`) where appropriate to ensure consistent behavior across all contexts.
+    - **Headless Execution**: Automated tests must be verified to pass in headless mode (`nvim --headless -c "lua MiniTest.run()"`) before any changes are finalized.
