@@ -126,7 +126,24 @@ local version = "NEOVIM " .. vim.version().major .. "." .. vim.version().minor .
 local user = os.getenv("USER") or os.getenv("LOGNAME") or "user"
 local welcome = "  Welcome to " .. version .. ", " .. user
 
-local function get_last_update_text()
+local function format_relative_time(last_update)
+  if not last_update or last_update == 0 then
+    return " (Never)"
+  end
+  local diff = os.time() - last_update
+  if diff < 60 then
+    return " (Just now)"
+  end
+  if diff < 3600 then
+    return string.format(" (%d mins ago)", math.floor(diff / 60))
+  end
+  if diff < 86400 then
+    return string.format(" (%d hrs ago)", math.floor(diff / 3600))
+  end
+  return string.format(" (%d days ago)", math.floor(diff / 86400))
+end
+
+local function get_pack_update_text()
   local last_update = 0
   local f = io.open(state_path, "r")
   if f then
@@ -160,20 +177,45 @@ local function get_last_update_text()
       end
     end
   end
+  return format_relative_time(last_update)
+end
+
+local function get_mason_update_text()
+  local last_update = 0
+  local m_state_path = vim.fn.stdpath("state") .. "/mason_update_time"
+  local f = io.open(m_state_path, "r")
+  if f then
+    last_update = tonumber(f:read("*all")) or 0
+    f:close()
+  end
   if last_update == 0 then
-    return " (Never)"
+    -- Fallback to modification time of mason.log if available
+    local log_path = vim.fn.stdpath("state") .. "/mason.log"
+    local mtime = vim.fn.getftime(log_path)
+    if mtime > 0 then
+      last_update = mtime
+    end
   end
-  local diff = os.time() - last_update
-  if diff < 60 then
-    return " (Just now)"
+  return format_relative_time(last_update)
+end
+
+local function get_ts_update_text()
+  local last_update = 0
+  local ts_state_path = vim.fn.stdpath("state") .. "/ts_update_time"
+  local f = io.open(ts_state_path, "r")
+  if f then
+    last_update = tonumber(f:read("*all")) or 0
+    f:close()
   end
-  if diff < 3600 then
-    return string.format(" (%d mins ago)", math.floor(diff / 60))
+  if last_update == 0 then
+    -- Fallback to modification time of nvim-treesitter plugin directory
+    local ts_path = vim.fn.stdpath("data") .. "/site/pack/core/opt/nvim-treesitter"
+    local mtime = vim.fn.getftime(ts_path)
+    if mtime > 0 then
+      last_update = mtime
+    end
   end
-  if diff < 86400 then
-    return string.format(" (%d hrs ago)", math.floor(diff / 3600))
-  end
-  return string.format(" (%d days ago)", math.floor(diff / 86400))
+  return format_relative_time(last_update)
 end
 
 starter.setup({
@@ -192,12 +234,14 @@ starter.setup({
       return items
     end,
     { name = "Edit new buffer", action = "enew", section = "Actions:" },
-    { name = "Update Mason", action = "Mason", section = "Actions:" },
     function()
-      return { name = "Update Plugins" .. get_last_update_text(), action = "PackUpdate", section = "Actions:" }
+      return { name = "Update Mason" .. get_mason_update_text(), action = "Mason", section = "Actions:" }
     end,
     function()
-      return { name = "Update Treesitter", action = "PackTSUpdate", section = "Actions:" }
+      return { name = "Update Plugins" .. get_pack_update_text(), action = "PackUpdate", section = "Actions:" }
+    end,
+    function()
+      return { name = "Update Treesitter" .. get_ts_update_text(), action = "PackTSUpdate", section = "Actions:" }
     end,
     { name = "Quit Neovim", action = "qall", section = "Actions:" },
   },

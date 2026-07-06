@@ -61,8 +61,12 @@ T["Statusline"]["PackUpdate command updates the plugin update timestamp file"] =
   -- Define the state path
   local state_path = child.lua_get("vim.fn.stdpath('state') .. '/plugin_update_time'")
   
-  -- Delete the file if it exists to ensure a clean test state
-  os.remove(state_path)
+  -- Write an old timestamp to avoid fallback log-parsing
+  local f = io.open(state_path, "w")
+  if f then
+    f:write("1000000000") -- Sun Sep  9 2001
+    f:close()
+  end
   
   -- Open starter screen in child and check that the initial item says "Never" or does not say "Just now"
   child.lua("require('mini.starter').open()")
@@ -70,7 +74,7 @@ T["Statusline"]["PackUpdate command updates the plugin update timestamp file"] =
   local before_lines = child.api.nvim_buf_get_lines(0, 0, -1, false)
   local found_just_now_before = false
   for _, line in ipairs(before_lines) do
-    if line:find("Just now") then
+    if line:find("Update Plugins") and line:find("Just now") then
       found_just_now_before = true
     end
   end
@@ -78,6 +82,8 @@ T["Statusline"]["PackUpdate command updates the plugin update timestamp file"] =
   
   -- Execute the PackUpdate user command
   -- This should write the timestamp and immediately refresh the starter dashboard on the fly!
+  -- Mock vim.pack.update in the child to avoid network calls and timeouts during tests
+  child.lua("vim.pack.update = function() end")
   child.api.nvim_command("PackUpdate")
   
   -- Verify the file exists now
@@ -88,7 +94,7 @@ T["Statusline"]["PackUpdate command updates the plugin update timestamp file"] =
   local after_lines = child.api.nvim_buf_get_lines(0, 0, -1, false)
   local found_just_now_after = false
   for _, line in ipairs(after_lines) do
-    if line:find("Just now") then
+    if line:find("Update Plugins") and line:find("Just now") then
       found_just_now_after = true
     end
   end

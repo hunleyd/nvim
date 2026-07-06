@@ -313,6 +313,25 @@ if ok_mason and ok_mason_lsp then
     }
   })
 
+  -- Listen to package:install:success to update the last update timestamp
+  local ok_registry, registry = pcall(require, "mason-registry")
+  if ok_registry then
+    registry:on("package:install:success", function()
+      local state_path = vim.fn.stdpath("state") .. "/mason_update_time"
+      local f = io.open(state_path, "w")
+      if f then
+        f:write(tostring(os.time()))
+        f:close()
+      end
+
+      -- Refresh mini.starter on the fly if currently on the dashboard
+      local ok_starter, starter = pcall(require, "mini.starter")
+      if ok_starter and vim.bo.filetype == "ministarter" then
+        pcall(starter.refresh)
+      end
+    end)
+  end
+
   -- Configure the server via our wrapper
   M.setup_server("lua_ls", {
     settings = {

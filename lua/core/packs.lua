@@ -133,7 +133,22 @@ end, { desc = "Update managed plugins" })
 ---
 --- Executes `:TSUpdate` to update all installed Tree-sitter parsers.
 --- @tag :PackTSUpdate
-vim.api.nvim_create_user_command("PackTSUpdate", "TSUpdate", { desc = "Update Treesitter parsers" })
+vim.api.nvim_create_user_command("PackTSUpdate", function()
+  local state_path = vim.fn.stdpath("state") .. "/ts_update_time"
+  local f = io.open(state_path, "w")
+  if f then
+    f:write(tostring(os.time()))
+    f:close()
+  end
+
+  -- Refresh mini.starter on the fly if currently on the dashboard
+  local ok_starter, starter = pcall(require, "mini.starter")
+  if ok_starter and vim.bo.filetype == "ministarter" then
+    pcall(starter.refresh)
+  end
+
+  vim.cmd("TSUpdate")
+end, { desc = "Update Treesitter parsers" })
 
 -- -----------------------------------------------------------------------------
 -- Automations: Plugin Notifications
