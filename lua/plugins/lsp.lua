@@ -125,8 +125,8 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: Rename Symbol", buffer = bufnr })
   vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code Action", buffer = bufnr })
   vim.keymap.set("n", "<leader>f", function()
-    vim.lsp.buf.format({ async = true })
-  end, { desc = "LSP: Format Buffer", buffer = bufnr })
+    require("conform").format({ async = true, lsp_format = "fallback" })
+  end, { desc = "Format Buffer", buffer = bufnr })
 
   -- 3. Diagnostic Navigation
   vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "LSP: Prev Diagnostic", buffer = bufnr })

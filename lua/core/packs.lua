@@ -19,6 +19,10 @@ vim.pack.add({
     name = "statuscol.nvim",
     src = "https://github.com/luukvbaal/statuscol.nvim",
   },
+  {
+    name = "conform.nvim",
+    src = "https://github.com/stevearc/conform.nvim",
+  },
 })
 
 -- justify: Built-in text alignment commands.
@@ -86,6 +90,9 @@ require("plugins.statuscol")
 
 -- hardtime: Enforce efficient Neovim usage and break bad habits.
 require("plugins.hardtime")
+
+-- conform: Fast, async, diff-based formatting.
+require("plugins.conform")
 
 -- mini.nvim: Collection of minimal, high-quality Lua modules.
 require("plugins.mini")
