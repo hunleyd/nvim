@@ -167,6 +167,7 @@ starter.setup({
       return items
     end,
     { name = "Edit new buffer", action = "enew", section = "Actions:" },
+    { name = "Update Mason", action = "Mason", section = "Actions:" },
     function()
       return { name = "Update Plugins" .. get_last_update_text(), action = "PackUpdate", section = "Actions:" }
     end,
@@ -210,6 +211,8 @@ starter.setup({
           local shortcut = "?"
           if item.name:match("^Edit new buffer") then
             shortcut = "e"
+          elseif item.name:match("^Update Mason") then
+            shortcut = "m"
           elseif item.name:match("^Update Plugins") then
             shortcut = "p"
           elseif item.name:match("^Update Treesitter") then
