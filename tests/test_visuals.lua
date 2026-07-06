@@ -9,9 +9,12 @@ local T = MiniTest.new_set({
         vim.opt.laststatus = 0
         vim.opt.showmode = false
         vim.opt.ruler = false
+        vim.opt.number = true
+        vim.opt.relativenumber = false
         -- Disable statuscol specifically for this visual test to avoid gutter rendering issues
         vim.opt.statuscolumn = ""
         pcall(vim.api.nvim_del_augroup_by_name, 'StarterStatusline')
+        pcall(vim.api.nvim_del_augroup_by_name, 'NumberToggle')
         pcall(require, 'mini.map'); if MiniMap then MiniMap.close(); MiniMap.setup({ enabled = false }) end
         pcall(require, 'mini.notify'); if MiniNotify then MiniNotify.clear() end
       ]])

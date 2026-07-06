@@ -1410,6 +1410,30 @@ vim.opt.scrolloff = 8
 -- Indentation Deletion: Delete 4 spaces on backspace if they act as a tab
 vim.opt.softtabstop = 4
 
+-- Hybrid Line Numbers: Current line absolute, other lines relative in Normal mode.
+-- Toggles to absolute-only in Insert mode to ease editing.
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+local number_group = vim.api.nvim_create_augroup("NumberToggle", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
+  group = number_group,
+  callback = function()
+    if vim.wo.number and vim.api.nvim_get_mode().mode ~= "i" then
+      vim.wo.relativenumber = true
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
+  group = number_group,
+  callback = function()
+    if vim.wo.number then
+      vim.wo.relativenumber = false
+    end
+  end,
+})
+
 -- -----------------------------------------------------------------------------
 -- Sane Habits: Message Redirection to Pop-ups
 -- -----------------------------------------------------------------------------
