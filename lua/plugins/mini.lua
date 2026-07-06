@@ -539,9 +539,13 @@ require("mini.completion").setup({
     -- Sane Habits: If spelling is active and the word at/before the cursor is misspelled,
     -- automatically trigger Neovim's built-in spelling completion (<C-x><C-s>) instead of <C-n>!
     if vim.wo.spell then
+      local save_pos = vim.api.nvim_win_get_cursor(0)
       local bad_info = vim.fn.spellbadword()
       local bad_word = bad_info[1]
-      if bad_word ~= "" then
+      local new_pos = vim.api.nvim_win_get_cursor(0)
+      vim.api.nvim_win_set_cursor(0, save_pos)
+
+      if bad_word ~= "" and new_pos[1] == save_pos[1] and new_pos[2] <= save_pos[2] and save_pos[2] <= new_pos[2] + #bad_word then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-x><C-s>", true, true, true), "t", false)
         return
       end
@@ -579,9 +583,13 @@ local function check_and_trigger_spell_completion()
   end
 
   if vim.wo.spell and vim.bo.buftype == "" then
+    local save_pos = vim.api.nvim_win_get_cursor(0)
     local bad_info = vim.fn.spellbadword()
     local bad_word = bad_info[1]
-    if bad_word ~= "" then
+    local new_pos = vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_win_set_cursor(0, save_pos)
+
+    if bad_word ~= "" and new_pos[1] == save_pos[1] and new_pos[2] <= save_pos[2] and save_pos[2] <= new_pos[2] + #bad_word then
       pcall(function()
         require("mini.completion").complete_twostage()
       end)
