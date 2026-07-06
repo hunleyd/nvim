@@ -56,18 +56,16 @@ require("mini.icons").setup({
 require("mini.icons").mock_nvim_web_devicons()
 
 -- Automation: Update plugin update timestamp
--- When vim.pack successfully updates a plugin, record the current time.
+-- When vim.pack successfully updates, installs, or cleans a plugin, record the current time.
 -- This timestamp is used by mini.starter to show how long ago plugins were updated.
 vim.api.nvim_create_autocmd("User", {
   group = vim.api.nvim_create_augroup("PackUpdateTimestamp", { clear = true }),
   pattern = "PackChanged",
   callback = function(data)
-    if data.data.kind == "update" then
-      local f = io.open(state_path, "w")
-      if f then
-        f:write(tostring(os.time()))
-        f:close()
-      end
+    local f = io.open(state_path, "w")
+    if f then
+      f:write(tostring(os.time()))
+      f:close()
     end
   end,
 })
@@ -134,6 +132,33 @@ local function get_last_update_text()
   if f then
     last_update = tonumber(f:read("*all")) or 0
     f:close()
+  end
+  if last_update == 0 then
+    -- Try to parse from nvim-pack.log if the state file is missing/empty
+    local log_path = vim.fn.stdpath("state") .. "/nvim-pack.log"
+    local log_f = io.open(log_path, "r")
+    if log_f then
+      local last_line = ""
+      for line in log_f:lines() do
+        if line:find("^========== Update") then
+          last_line = line
+        end
+      end
+      log_f:close()
+
+      -- Format: "========== Update YYYY-MM-DD HH:MM:SS =========="
+      local y, m, d, hr, min, sec = last_line:match("Update (%d%d%d%d)-(%d%d)-(%d%d) (%d%d):(%d%d):(%d%d)")
+      if y and m and d and hr and min and sec then
+        last_update = os.time({
+          year = tonumber(y),
+          month = tonumber(m),
+          day = tonumber(d),
+          hour = tonumber(hr),
+          min = tonumber(min),
+          sec = tonumber(sec),
+        })
+      end
+    end
   end
   if last_update == 0 then
     return " (Never)"
