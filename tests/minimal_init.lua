@@ -7,7 +7,7 @@ package.path = package.path .. ';' .. root .. '/lua/?.lua;' .. root .. '/lua/?/i
 -- Add plugin paths to runtimepath
 -- In isolated test children, stdpath('data') is a temporary directory. Point directly
 -- to the user's standard package path to prevent cloning plugins from GitHub on every test run.
-local real_site = '/home/doug/.local/share/nvim/site'
+local real_site = vim.fn.expand('~/.local/share/nvim/site')
 local data_path = (vim.fn.isdirectory(real_site) == 1 and real_site) or (vim.fn.stdpath('data') .. '/site')
 vim.opt.packpath:prepend(data_path)
 

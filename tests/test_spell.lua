@@ -37,7 +37,7 @@ T["Spelling"]["dynamically adds programming to spelllang on PackChanged event"] 
   -- Append the project's config directory to the child's runtimepath.
   -- This allows the child to locate autoload/spellfile.vim (the compatibility bridge) on demand.
   child.lua([[
-    vim.opt.runtimepath:append("/home/doug/.config/nvim")
+    vim.opt.runtimepath:append(vim.fn.expand("~/.config/nvim"))
   ]])
 
   -- Trigger PackChanged for vim-dirtytalk. This will load the real command and compile it.
