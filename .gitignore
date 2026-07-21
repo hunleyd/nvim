@@ -1,0 +1,4 @@
+# Ignore codegraph index files generated during codebase analysis
+# Why: codegraph creates local index data in .codegraph/ that should not be tracked in dotfiles
+# How: ignore .codegraph directory recursively
+.codegraph/
