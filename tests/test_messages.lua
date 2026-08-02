@@ -128,4 +128,23 @@ T["Messages"]["line deletion triggers fewer lines popup notification"] = functio
   MiniTest.expect.equality(msg, "3 fewer lines")
 end
 
+T["Messages"]["v:starttime and v:exitreason are available in v0.12.3"] = function()
+  local starttime = child.lua_get("vim.v.starttime")
+  local exitreason_exists = child.lua_get("vim.v.exitreason ~= nil")
+  MiniTest.expect.equality(type(starttime), "number")
+  MiniTest.expect.equality(starttime > 0, true)
+  MiniTest.expect.equality(exitreason_exists, true)
+end
+
+T["Messages"]["writefile accepts lua string blob directly in v0.12.3"] = function()
+  local ok = child.lua([[
+    local tmp = vim.fn.tempname()
+    vim.fn.writefile("hello world", tmp)
+    local lines = vim.fn.readfile(tmp)
+    os.remove(tmp)
+    return lines[1] == "hello world"
+  ]])
+  MiniTest.expect.equality(ok, true)
+end
+
 return T

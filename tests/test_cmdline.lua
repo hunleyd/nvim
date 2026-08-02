@@ -41,4 +41,18 @@ T["Tiny Cmdline"]["disables mini.cmdline to avoid collisions"] = function()
   MiniTest.expect.equality(mini_cmdline_active, false)
 end
 
+T["Tiny Cmdline"]["vim.pos supports buf=0 and to_offset in v0.12.3"] = function()
+  child.api.nvim_command("enew")
+  local ok = child.lua([[
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, { "hello", "world" })
+    local pos = vim.pos and vim.pos(0, 1, 0)
+    if pos and pos.to_offset then
+      local off = pos:to_offset()
+      return type(off) == "number"
+    end
+    return true
+  ]])
+  MiniTest.expect.equality(ok, true)
+end
+
 return T

@@ -318,11 +318,7 @@ if ok_mason and ok_mason_lsp then
   if ok_registry then
     registry:on("package:install:success", function()
       local state_path = vim.fn.stdpath("state") .. "/mason_update_time"
-      local f = io.open(state_path, "w")
-      if f then
-        f:write(tostring(os.time()))
-        f:close()
-      end
+      vim.fn.writefile(tostring(os.time()), state_path)
 
       -- Refresh mini.starter on the fly if currently on the dashboard
       local ok_starter, starter = pcall(require, "mini.starter")

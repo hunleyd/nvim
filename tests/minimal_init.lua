@@ -21,3 +21,7 @@ os.remove(db_dir .. '/yankbank.db-wal')
 os.remove(db_dir .. '/yankbank.db-shm')
 
 dofile('init.lua')
+
+pcall(function()
+  MiniTest = require('mini.test')
+end)

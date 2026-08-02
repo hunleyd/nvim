@@ -114,11 +114,7 @@ vim.api.nvim_create_user_command("PackUpdate", function()
   -- This ensures the starter dashboard "last update" indicator updates even if
   -- all plugins are already up-to-date (no actual PackChanged events fired).
   local state_path = vim.fn.stdpath("state") .. "/plugin_update_time"
-  local f = io.open(state_path, "w")
-  if f then
-    f:write(tostring(os.time()))
-    f:close()
-  end
+  vim.fn.writefile(tostring(os.time()), state_path)
 
   -- Refresh mini.starter on the fly if we are currently on the dashboard to update the timestamp instantly
   local ok_starter, starter = pcall(require, "mini.starter")
@@ -135,11 +131,7 @@ end, { desc = "Update managed plugins" })
 --- @tag :PackTSUpdate
 vim.api.nvim_create_user_command("PackTSUpdate", function()
   local state_path = vim.fn.stdpath("state") .. "/ts_update_time"
-  local f = io.open(state_path, "w")
-  if f then
-    f:write(tostring(os.time()))
-    f:close()
-  end
+  vim.fn.writefile(tostring(os.time()), state_path)
 
   -- Refresh mini.starter on the fly if currently on the dashboard
   local ok_starter, starter = pcall(require, "mini.starter")

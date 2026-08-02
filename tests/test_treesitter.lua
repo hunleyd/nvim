@@ -67,4 +67,9 @@ T["Treesitter"]["Repeatable Moves override ; and ,"] = function()
   MiniTest.expect.equality(res, "SUCCESS")
 end
 
+T["Treesitter"]["vim.treesitter.select is provided in Neovim v0.12.3"] = function()
+  local has_select = child.lua_get("type(vim.treesitter.select) == 'function'")
+  MiniTest.expect.equality(has_select, true)
+end
+
 return T

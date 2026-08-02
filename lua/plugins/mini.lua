@@ -62,11 +62,7 @@ vim.api.nvim_create_autocmd("User", {
   group = vim.api.nvim_create_augroup("PackUpdateTimestamp", { clear = true }),
   pattern = "PackChanged",
   callback = function(data)
-    local f = io.open(state_path, "w")
-    if f then
-      f:write(tostring(os.time()))
-      f:close()
-    end
+    vim.fn.writefile(tostring(os.time()), state_path)
   end,
 })
 
