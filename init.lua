@@ -15,7 +15,12 @@ vim.g.mapleader = " "
 -- through our floating notification system. This is done early to capture
 -- messages from plugins that load during startup (like nvim-treesitter).
 local original_echo = vim.api.nvim_echo
+local in_echo = false
 vim.api.nvim_echo = function(chunks, history, opts)
+  if in_echo then
+    return original_echo(chunks, history, opts)
+  end
+
   -- If we're in headless mode, fall back to the original echo for CLI output.
   if #vim.api.nvim_list_uis() == 0 then
     return original_echo(chunks, history, opts)
@@ -40,11 +45,18 @@ vim.api.nvim_echo = function(chunks, history, opts)
 
   -- We use a deferred call to ensure Utils is loaded if this is called extremely early.
   vim.schedule(function()
-    if _G.Utils and _G.Utils.notify then
-      _G.Utils.notify(msg, level, { title = " System " })
-    else
-      -- Fallback if Utils is not yet available
-      vim.notify(msg, level)
+    in_echo = true
+    local ok, err = pcall(function()
+      if _G.Utils and _G.Utils.notify then
+        _G.Utils.notify(msg, level, { title = " System " })
+      else
+        -- Fallback if Utils is not yet available
+        vim.notify(msg, level)
+      end
+    end)
+    in_echo = false
+    if not ok then
+      error(err)
     end
   end)
 end

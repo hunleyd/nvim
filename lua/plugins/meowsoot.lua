@@ -17,4 +17,4 @@ vim.pack.add({
 -- -----------------------------------------------------------------------------
 
 -- Apply the colorscheme.
-vim.cmd.colorscheme("meowsoot")
+pcall(vim.cmd.colorscheme, "meowsoot")

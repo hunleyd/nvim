@@ -32,25 +32,28 @@ vim.pack.add({
 -- Configuration
 -- -----------------------------------------------------------------------------
 
-require("yankbank").setup({
-  -- Number of yanks/deletions to persist
-  max_entries = 15,
+local ok, yankbank = pcall(require, "yankbank")
+if ok then
+  yankbank.setup({
+    -- Number of yanks/deletions to persist
+    max_entries = 15,
 
-  -- Separator between entries
-  sep = "-----",
+    -- Separator between entries
+    sep = "-----",
 
-  -- Navigation behavior inside popup: jump directly to index by pressing numbers (1-9)
-  num_behavior = "jump",
+    -- Navigation behavior inside popup: jump directly to index by pressing numbers (1-9)
+    num_behavior = "jump",
 
-  -- Persistence settings
-  persist_type = "sqlite",
-  db_path = vim.fn.stdpath("data"),
+    -- Persistence settings
+    persist_type = "sqlite",
+    db_path = vim.fn.stdpath("data"),
 
-  -- Register selection
-  registers = {
-    yank_register = "+", -- System clipboard register
-  },
-})
+    -- Register selection
+    registers = {
+      yank_register = "+", -- System clipboard register
+    },
+  })
+end
 
 -- Mapping: <leader>py to open the YankBank popup
 -- Fits cleanly next to other pickers (<leader>pd, <leader>ps, <leader>pz)
