@@ -11,8 +11,9 @@ local T = MiniTest.new_set({
         vim.opt.ruler = false
         vim.opt.number = true
         vim.opt.relativenumber = false
-        -- Disable statuscol specifically for this visual test to avoid gutter rendering issues
+        -- Disable statuscolumn specifically for this visual test to avoid gutter rendering issues
         vim.opt.statuscolumn = ""
+        vim.opt_global.statuscolumn = ""
         pcall(vim.api.nvim_del_augroup_by_name, 'StarterStatusline')
         pcall(vim.api.nvim_del_augroup_by_name, 'NumberToggle')
         pcall(require, 'mini.map'); if MiniMap then MiniMap.close(); MiniMap.setup({ enabled = false }) end
@@ -48,8 +49,7 @@ T["Tabline Visuals"]["matches reference exactly"] = function()
   child.lua("require('mini.notify').clear()")
   
   -- Use screenshot testing to verify the entire TUI state of the tabline
-  -- Note: We only check the first line (the tabline itself)
-  MiniTest.expect.reference_screenshot(child.get_screenshot({ lines = { 1, 1 } }))
+  MiniTest.expect.reference_screenshot(child.get_screenshot())
 end
 
 return T

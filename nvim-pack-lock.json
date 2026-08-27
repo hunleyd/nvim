@@ -29,7 +29,7 @@
       "src": "https://github.com/marekh19/meowsoot.nvim"
     },
     "mini.nvim": {
-      "rev": "bcb4b2688b38f5c48ada025abe130d41840e11d5",
+      "rev": "1098976ddda3cf00f50c1dda5eef10ccf463d9eb",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "nui.nvim": {

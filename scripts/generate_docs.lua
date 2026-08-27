@@ -15,6 +15,7 @@ local function generate()
     'lua/plugins/yaml-revealer.lua',
     'lua/plugins/yankbank.lua',
     'lua/plugins/cmdline.lua',
+    'lua/plugins/statuscolumn.lua',
   }
   
   -- Generate the help file

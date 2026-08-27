@@ -19,3 +19,4 @@
     - **Visual Regression**: For any UI-impacting changes (statuslines, tablines, dashboard, etc.), you **MUST** implement or update visual regression tests using `MiniTest.expect.reference_screenshot()`.
     - **Matrix Testing**: Verification suites must test against a matrix of relevant buffer types (regular files, `'nofile'`, and `'terminal'`) where appropriate to ensure consistent behavior across all contexts.
     - **Headless Execution**: Automated tests must be verified to pass in headless mode (`nvim --headless -c "lua MiniTest.run()"`) before any changes are finalized.
+- **Upstream Information Gathering**: When reviewing upstream releases or commits, rely on changelog summaries and release notes. Do **NOT** fetch or download raw commit patches/diffs unless release summaries are ambiguous or explicitly requested.

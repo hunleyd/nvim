@@ -16,8 +16,8 @@ vim.pack.add({
     src = "https://github.com/rafamadriz/friendly-snippets",
   },
   {
-    name = "statuscol.nvim",
-    src = "https://github.com/luukvbaal/statuscol.nvim",
+    name = "mini.nvim",
+    src = "https://github.com/echasnovski/mini.nvim",
   },
   {
     name = "conform.nvim",
@@ -85,8 +85,8 @@ require("plugins.lsp")
 -- tabline: Custom GUI-style physical tabs.
 require("plugins.tabline")
 
--- statuscol: High-fidelity status column layout.
-require("plugins.statuscol")
+-- statuscolumn: High-fidelity status column layout (mini.statuscolumn).
+require("plugins.statuscolumn")
 
 -- hardtime: Enforce efficient Neovim usage and break bad habits.
 require("plugins.hardtime")
