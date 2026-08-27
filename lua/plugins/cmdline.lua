@@ -25,28 +25,31 @@ vim.pack.add({
 -- to our newly configured floating window.
 vim.opt.cmdheight = 0
 
-require("tiny-cmdline").setup({
-  -- Command-line window dimensions
-  width = {
-    value = "50%", -- Centered pop-up width as a fraction of editor columns
-    min = 40,
-    max = 80,
-  },
+local ok, tiny_cmdline = pcall(require, "tiny-cmdline")
+if ok then
+  tiny_cmdline.setup({
+    -- Command-line window dimensions
+    width = {
+      value = "50%", -- Centered pop-up width as a fraction of editor columns
+      min = 40,
+      max = 80,
+    },
 
-  position = {
-    x = "50%", -- Centered horizontally
-    y = "35%", -- Positioned slightly higher than center for ideal eye tracking
-  },
+    position = {
+      x = "50%", -- Centered horizontally
+      y = "35%", -- Positioned slightly higher than center for ideal eye tracking
+    },
 
-  -- Clean, modern rounded border
-  border = "rounded",
+    -- Clean, modern rounded border
+    border = "rounded",
 
-  -- Set empty to center search queries (/ and ?) in the floating window as well
-  native_types = {},
+    -- Set empty to center search queries (/ and ?) in the floating window as well
+    native_types = {},
 
-  -- Enable dynamic titles on the border
-  title = {
-    enabled = true,
-    pos = "center",
-  },
-})
+    -- Enable dynamic titles on the border
+    title = {
+      enabled = true,
+      pos = "center",
+    },
+  })
+end

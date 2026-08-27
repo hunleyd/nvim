@@ -79,95 +79,98 @@ vim.api.nvim_set_hl(0, "RenderMarkdownTableRow", { fg = c.fg })
 -- Configuration
 -- -----------------------------------------------------------------------------
 
-require("render-markdown").setup({
-  -- Enable rendering on markdown files
-  file_types = { "markdown" },
-  
-  -- Enable rendering in normal, command, and terminal modes,
-  -- but toggle off in Insert mode for flawless, non-disruptive editing.
-  render_modes = { "n", "c", "t" },
+local ok, render_markdown = pcall(require, "render-markdown")
+if ok then
+  render_markdown.setup({
+    -- Enable rendering on markdown files
+    file_types = { "markdown" },
+    
+    -- Enable rendering in normal, command, and terminal modes,
+    -- but toggle off in Insert mode for flawless, non-disruptive editing.
+    render_modes = { "n", "c", "t" },
 
-  -- Configure heading visual style (minimalist, clean and robust)
-  heading = {
-    enabled = true,
-    sign = true,
-    icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
-    position = "overlay",
-    width = "full",
-  },
-
-  -- Code block options
-  code = {
-    enabled = true,
-    sign = true,
-    style = "full",
-    position = "left",
-    language_pad = 1,
-    language_name = true,
-    language_icon = true,
-    highlight = "RenderMarkdownCode",
-    highlight_inline = "RenderMarkdownCodeInline",
-  },
-
-  -- Bullet list formatting
-  bullet = {
-    enabled = true,
-    icons = { "●", "○", "◆", "◇" },
-    highlight = "RenderMarkdownBullet",
-  },
-
-  -- Checkbox / To-Do item rendering
-  checkbox = {
-    enabled = true,
-    unchecked = {
-      icon = "󰄱 ",
-      highlight = "RenderMarkdownUnchecked",
+    -- Configure heading visual style (minimalist, clean and robust)
+    heading = {
+      enabled = true,
+      sign = true,
+      icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+      position = "overlay",
+      width = "full",
     },
-    checked = {
-      icon = "󰱒 ",
-      highlight = "RenderMarkdownChecked",
+
+    -- Code block options
+    code = {
+      enabled = true,
+      sign = true,
+      style = "full",
+      position = "left",
+      language_pad = 1,
+      language_name = true,
+      language_icon = true,
+      highlight = "RenderMarkdownCode",
+      highlight_inline = "RenderMarkdownCodeInline",
     },
-    custom = {
-      todo = { raw = "[-]", rendered = "󰥔 ", highlight = "RenderMarkdownTodo" },
+
+    -- Bullet list formatting
+    bullet = {
+      enabled = true,
+      icons = { "●", "○", "◆", "◇" },
+      highlight = "RenderMarkdownBullet",
     },
-  },
 
-  -- Quotes
-  quote = {
-    enabled = true,
-    icon = "▋",
-    highlight = "RenderMarkdownQuote",
-  },
-
-  -- Clean tables rendering
-  pipe_table = {
-    enabled = true,
-    preset = "none",
-    style = "full",
-    cell = "padded",
-    padding = 1,
-    border = {
-      "┌", "┬", "┐",
-      "├", "┼", "┤",
-      "└", "┴", "┘",
-      "│", "─", " ",
+    -- Checkbox / To-Do item rendering
+    checkbox = {
+      enabled = true,
+      unchecked = {
+        icon = "󰄱 ",
+        highlight = "RenderMarkdownUnchecked",
+      },
+      checked = {
+        icon = "󰱒 ",
+        highlight = "RenderMarkdownChecked",
+      },
+      custom = {
+        todo = { raw = "[-]", rendered = "󰥔 ", highlight = "RenderMarkdownTodo" },
+      },
     },
-    highlight = "RenderMarkdownTable",
-    head = "RenderMarkdownTableHead",
-    row = "RenderMarkdownTableRow",
-  },
 
-  -- Modern Alert / Callout banners
-  callout = {
-    note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
-    tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
-    important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
-    warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
-    caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
-  },
+    -- Quotes
+    quote = {
+      enabled = true,
+      icon = "▋",
+      highlight = "RenderMarkdownQuote",
+    },
 
-  -- LaTeX equations conversion (disable to avoid shell warnings if CLI tools are missing)
-  latex = {
-    enabled = false,
-  },
-})
+    -- Clean tables rendering
+    pipe_table = {
+      enabled = true,
+      preset = "none",
+      style = "full",
+      cell = "padded",
+      padding = 1,
+      border = {
+        "┌", "┬", "┐",
+        "├", "┼", "┤",
+        "└", "┴", "┘",
+        "│", "─", " ",
+      },
+      highlight = "RenderMarkdownTable",
+      head = "RenderMarkdownTableHead",
+      row = "RenderMarkdownTableRow",
+    },
+
+    -- Modern Alert / Callout banners
+    callout = {
+      note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
+      tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
+      important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
+      warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
+      caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
+    },
+
+    -- LaTeX equations conversion (disable to avoid shell warnings if CLI tools are missing)
+    latex = {
+      enabled = false,
+    },
+  })
+end
