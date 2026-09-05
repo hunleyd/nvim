@@ -32,16 +32,12 @@ T["SearchLens"]["displays extmark with match count on search navigation"] = func
     vim.fn.setreg('/', 'match')
     vim.v.hlsearch = 1
     vim.api.nvim_win_set_cursor(0, { 1, 6 })
-    
+
     local lens = require("plugins.hlsearch_lens")
     lens.show()
   ]])
 
-  local extmarks = child.lua_get([[
-    local ns = vim.api.nvim_create_namespace("hlsearch_lens")
-    local marks = vim.api.nvim_buf_get_extmarks(0, ns, 0, -1, { details = true })
-    return marks
-  ]])
+  local extmarks = child.lua_get("vim.api.nvim_buf_get_extmarks(0, vim.api.nvim_create_namespace('hlsearch_lens'), 0, -1, { details = true })")
 
   MiniTest.expect.equality(#extmarks, 1)
   local virt_text = extmarks[1][4].virt_text[1][1]
@@ -65,13 +61,17 @@ T["SearchLens"]["updates match index when jumping with n and N"] = function()
     require("plugins.hlsearch_lens").show()
   ]])
 
-  local virt_text = child.lua_get([[
-    local ns = vim.api.nvim_create_namespace("hlsearch_lens")
-    local marks = vim.api.nvim_buf_get_extmarks(0, ns, 0, -1, { details = true })
-    return marks[1][4].virt_text[1][1]
+  local virt_text = child.lua_get("vim.api.nvim_buf_get_extmarks(0, vim.api.nvim_create_namespace('hlsearch_lens'), 0, -1, { details = true })[1][4].virt_text[1][1]")
+  MiniTest.expect.equality(virt_text, " [2/3]")
+
+  -- Jump backward with N
+  child.lua([[
+    vim.cmd("normal! N")
+    require("plugins.hlsearch_lens").show()
   ]])
 
-  MiniTest.expect.equality(virt_text, " [2/3]")
+  local virt_text_prev = child.lua_get("vim.api.nvim_buf_get_extmarks(0, vim.api.nvim_create_namespace('hlsearch_lens'), 0, -1, { details = true })[1][4].virt_text[1][1]")
+  MiniTest.expect.equality(virt_text_prev, " [1/3]")
 end
 
 T["SearchLens"]["clears extmark when clear() is called"] = function()
@@ -86,11 +86,7 @@ T["SearchLens"]["clears extmark when clear() is called"] = function()
     lens.clear()
   ]])
 
-  local count = child.lua_get([[
-    local ns = vim.api.nvim_create_namespace("hlsearch_lens")
-    return #vim.api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
-  ]])
-
+  local count = child.lua_get("#vim.api.nvim_buf_get_extmarks(0, vim.api.nvim_create_namespace('hlsearch_lens'), 0, -1, {})")
   MiniTest.expect.equality(count, 0)
 end
 
@@ -112,11 +108,7 @@ T["SearchLens"]["clears extmark on cursor movement away from match"] = function(
     vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0 })
   ]])
 
-  local count = child.lua_get([[
-    local ns = vim.api.nvim_create_namespace("hlsearch_lens")
-    return #vim.api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
-  ]])
-
+  local count = child.lua_get("#vim.api.nvim_buf_get_extmarks(0, vim.api.nvim_create_namespace('hlsearch_lens'), 0, -1, {})")
   MiniTest.expect.equality(count, 0)
 end
 
@@ -130,10 +122,23 @@ T["SearchLens"]["works across different buftypes gracefully"] = function()
     local lens = require("plugins.hlsearch_lens")
     lens.show()
     lens.clear()
+
+    -- Test in a terminal buffer
+    local term_buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_open_term(term_buf, {})
+    vim.api.nvim_set_current_buf(term_buf)
+    _G.term_show_result = lens.show()
+    lens.clear()
   ]])
 
   local ok = child.lua_get([[type(require("plugins.hlsearch_lens")) == "table"]])
   MiniTest.expect.equality(ok, true)
+
+  local is_nil = child.lua_get("_G.term_show_result == nil")
+  MiniTest.expect.equality(is_nil, true)
+
+  local term_marks = child.lua_get("#vim.api.nvim_buf_get_extmarks(0, vim.api.nvim_create_namespace('hlsearch_lens'), 0, -1, {})")
+  MiniTest.expect.equality(term_marks, 0)
 end
 
 return T
