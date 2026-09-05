@@ -40,6 +40,10 @@ require("plugins.nohlsearch")
 -- automatically on cursor movements, mode switches, or manual :nohlsearch calls.
 require("plugins.hlsearch_lens")
 
+-- tabout: Native delimiter navigation out of parentheses, quotes, and brackets
+-- in Insert mode, integrated into mini.keymap multistep dispatch.
+require("plugins.tabout")
+
 -- nvim.difftool: Modern directory and file comparison.
 require("plugins.difftool")
 

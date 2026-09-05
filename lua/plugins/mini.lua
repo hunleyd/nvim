@@ -743,13 +743,15 @@ require("mini.snippets").start_lsp_server()
 -- -----------------------------------------------------------------------------
 
 local mk = require("mini.keymap")
+local tabout = require("plugins.tabout")
 
--- Smart <Tab>: Navigate menu, jump snippets, expand snippets, indent, or trigger completion.
+-- Smart <Tab>: Navigate menu, jump snippets, expand snippets, indent, tabout, or trigger completion.
 mk.map_multistep("i", "<Tab>", {
   "pmenu_next",
   "minisnippets_next",
   "minisnippets_expand",
   "increase_indent",
+  tabout.step_forward,
   {
     condition = function()
       return true
@@ -761,11 +763,12 @@ mk.map_multistep("i", "<Tab>", {
   },
 })
 
--- Smart <S-Tab>: Navigate menu backwards, jump snippets backwards, or dedent.
+-- Smart <S-Tab>: Navigate menu backwards, jump snippets backwards, dedent, or tabout backwards.
 mk.map_multistep("i", "<S-Tab>", {
   "pmenu_prev",
   "minisnippets_prev",
   "decrease_indent",
+  tabout.step_backward,
   {
     condition = function()
       return true
