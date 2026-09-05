@@ -22,9 +22,9 @@ NVIM_APPNAME=hunleyd/nvim/ nvim
 
 ## Plugins
 
-<a href="https://dotfyle.com/plugins/hunleyd/nvim">
-  <img src="https://dotfyle.com/plugins/hunleyd/nvim/shield" />
-</a>
+### bars-and-lines
+
+- [luukvbaal/statuscol.nvim](https://dotfyle.com/plugins/luukvbaal/statuscol.nvim)
 
 ### colorscheme
 
