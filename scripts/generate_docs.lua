@@ -16,10 +16,16 @@ local function generate()
     'lua/plugins/yankbank.lua',
     'lua/plugins/cmdline.lua',
     'lua/plugins/statuscolumn.lua',
+    'lua/plugins/hlsearch_lens.lua',
   }
   
   -- Generate the help file
   mini_doc.generate(files, 'doc/myconfig.txt', {
+    annotation_extractor = function(l)
+      local f, t, id = string.find(l, '^%-%-%-%s*(@%S*) ?')
+      if f then return f, t, id end
+      return string.find(l, '^%-%-%-(%S*) ?')
+    end,
     write_post = function()
       vim.cmd('helptags doc/')
     end

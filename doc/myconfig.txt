@@ -1,0 +1,205 @@
+                                                                    *core.packs*
+Neovim Package Management
+
+This module manages external plugins using the built-in `vim.pack` API.
+Each plugin's specification is defined here, and its configuration is
+modularized into separate files within the `lua/plugins/` directory.
+
+------------------------------------------------------------------------------
+                                                                   *:PackUpdate*
+Update managed plugins
+
+Leverages the built-in `vim.pack.update()` API. It runs non-interactively
+(using `force = true`) and provides feedback through a single,
+auto-updating notification popup.
+
+------------------------------------------------------------------------------
+                                                                 *:PackTSUpdate*
+Update Treesitter parsers
+
+Executes `:TSUpdate` to update all installed Tree-sitter parsers.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                     *MyTabLine*
+Custom GUI-Style Tabline
+
+This module implements a from-scratch tabline that looks like physical tabs.
+We avoid mini.tabline to allow for independent coloring of separators (│)
+without them inheriting the active tab's background.
+
+------------------------------------------------------------------------------
+                                                                *_G.MyTabLine()*
+                                `_G.MyTabLine`()
+Render the custom GUI-style tabline
+
+This function iterates through all listed buffers and constructs a string
+representing physical tabs. It uses `TabSeparator` for vertical lines and
+`TabLineSel` / `TabLineHiddenMod` for buffer states.
+
+It is intended to be used as `vim.o.tabline = "%!v:lua.MyTabLine()"`.
+
+Return ~
+`(string)` Rendered tabline string
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                    *mini.fuzzy*
+Fuzzy matching engine
+
+mini.fuzzy provides a minimal and fast fuzzy matching algorithm.
+It is integrated into `mini.completion` to allow for smarter filtering.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                    *treesitter*
+Tree-sitter configurations and abstraction layer
+
+nvim-treesitter provides a simple way to use the Tree-sitter library in 
+Neovim, offering high-fidelity syntax highlighting and structural understanding.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                           *lsp*
+Language Server Protocol (LSP) configuration
+
+This module configures Neovim's built-in LSP client using `nvim-lspconfig`.
+It integrates with `mini.completion` for code intelligence and routes
+diagnostics through the project's floating notification system.
+
+------------------------------------------------------------------------------
+                                                              *M.setup_server()*
+                       `M.setup_server`({name}, {config})
+Configure a language server
+Parameters ~
+{name} `(string)`: Server name (must be known by lspconfig)
+{config} `(table|nil)`: Optional server-specific settings
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                      *hardtime*
+Hardtime Configuration
+
+`hardtime.nvim` enforces efficient Neovim usage by restricting repetitive 
+keystrokes and suggesting better motions. It acts as a digital coach to 
+break bad habits like spamming `hjkl` or arrow keys.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                             *plugins.spellfile*
+Programming-specific spell checker and general spell management
+
+Integrates `psliwka/vim-dirtytalk` to provide spelling support for
+programming terms and configures native Neovim spell checking.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                              *plugins.markdown*
+Real-time Markdown rendering with high-fidelity aesthetics
+
+Leverages Treesitter to render Markdown headers, code blocks, lists,
+tables, checkboxes, and callouts directly inside the Neovim buffer.
+Fully customized to match the meowsoot colorscheme.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                               *plugins.ansible*
+Ansible syntax highlighting and intelligent filetype detection
+
+Integrates `pearofducks/ansible-vim` to provide robust filetype detection
+and syntax capabilities for Ansible playbooks, tasks, variables,
+Jinja2 templates, and hosts files.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                         *plugins.yaml_revealer*
+Real-time YAML hierarchy detection and nested key lookup
+
+Displays the full hierarchical path of the YAML key under your cursor
+in real-time, making navigation of deeply nested playbooks, hosts,
+and YAML files incredibly easy.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                              *plugins.yankbank*
+SQLite database and Clipboard History bank
+
+Integrates `kkharji/sqlite.lua` as the persistence layer for `yankbank-nvim`
+to save, search, and navigate your clipboard history across sessions.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                               *plugins.cmdline*
+Centered floating command-line using Neovim v0.12+ UI2
+
+Replaces the native bottom-anchored cmdline with a sleek, responsive,
+and centered floating window, utilizing Neovim's experimental UI2.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                  *statuscolumn*
+                                                             *mini.statuscolumn*
+Status Column Configuration
+
+`mini.statuscolumn` manages Neovim's `statuscolumn` (the gutter) with high
+performance, clean defaults for virtual and wrapped lines, and automatic
+dimming in inactive windows.
+
+Layout: [Signs (Diff / Diagnostics)] [Line Numbers] [Separator]
+
+------------------------------------------------------------------------------
+                                                      *Statuscolumn.update_mode*
+                                `M.update_mode`
+Refresh mode-dependent gutter highlights.
+Updates `CursorLineNr` and `MiniStatuscolumnSepCursor` based on the active mode.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                 *hlsearch_lens*
+                                                         *plugins.hlsearch_lens*
+Native Search Lens
+
+Displays non-intrusive virtual text at the end of the line indicating the
+current search match index and total match count (`[current/total]`), leveraging
+Neovim v0.12's native `vim.fn.searchcount` and extmarks.
+
+Integrates seamlessly with `meowsoot` highlights and automatically clears on
+cursor movement, mode change, or `:nohlsearch`.
+
+------------------------------------------------------------------------------
+Highlight group definition aligned with Meowsoot palette.
+
+------------------------------------------------------------------------------
+                                                            *HlSearchLens.clear*
+                               `M.clear`({bufnr})
+Clear all active search lens extmarks.
+
+------------------------------------------------------------------------------
+                                                             *HlSearchLens.show*
+                                   `M.show`()
+Render search lens at the current cursor line.
+Return ~
+`(table|nil)`: The searchcount result, or nil if no active match.
+
+------------------------------------------------------------------------------
+                                                       *HlSearchLens.statusline*
+                                `M.statusline`()
+Statusline helper for search count representation.
+Return ~
+`(string)`: Formatted statusline snippet or empty string if inactive.
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:

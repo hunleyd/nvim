@@ -10,17 +10,17 @@
 ---
 --- Integrates seamlessly with `meowsoot` highlights and automatically clears on
 --- cursor movement, mode change, or `:nohlsearch`.
---- @tag hlsearch_lens
---- @tag plugins.hlsearch_lens
+---@tag hlsearch_lens
+---@tag plugins.hlsearch_lens
 
 local M = {}
 
 --- Dedicated namespace for search lens extmarks.
---- @private
+---@private
 local ns_id = vim.api.nvim_create_namespace("hlsearch_lens")
 
 --- Active lens tracking state.
---- @private
+---@private
 local active_lens = nil
 
 --- Highlight group definition aligned with Meowsoot palette.
@@ -31,7 +31,7 @@ vim.api.nvim_set_hl(0, "SearchLens", {
 })
 
 --- Clear all active search lens extmarks.
---- @tag HlSearchLens.clear
+---@tag HlSearchLens.clear
 function M.clear(bufnr)
   bufnr = bufnr or 0
   if vim.api.nvim_buf_is_valid(bufnr) then
@@ -41,8 +41,8 @@ function M.clear(bufnr)
 end
 
 --- Render search lens at the current cursor line.
---- @return table|nil: The searchcount result, or nil if no active match.
---- @tag HlSearchLens.show
+---@return table|nil: The searchcount result, or nil if no active match.
+---@tag HlSearchLens.show
 function M.show()
   local bufnr = vim.api.nvim_get_current_buf()
   if not vim.api.nvim_buf_is_valid(bufnr) or vim.bo[bufnr].buftype == "terminal" then
@@ -91,8 +91,8 @@ function M.show()
 end
 
 --- Statusline helper for search count representation.
---- @return string: Formatted statusline snippet or empty string if inactive.
---- @tag HlSearchLens.statusline
+---@return string: Formatted statusline snippet or empty string if inactive.
+---@tag HlSearchLens.statusline
 function M.statusline()
   if vim.v.hlsearch == 0 then
     return ""
