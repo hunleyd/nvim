@@ -202,4 +202,64 @@ Return ~
 `(string)`: Formatted statusline snippet or empty string if inactive.
 
 
+==============================================================================
+------------------------------------------------------------------------------
+                                                                        *tabout*
+                                                                *plugins.tabout*
+Native Tabout Module
+
+Provides smart delimiter navigation out of parentheses, brackets, braces,
+quotes, and backticks in Insert mode. Integrates seamlessly with
+`mini.keymap.map_multistep` without external dependencies.
+
+Supports forward tabout (`<Tab>`) past closing delimiters and backward
+tabout (`<S-Tab>`) before opening delimiters, bounded strictly to the
+current line.
+
+------------------------------------------------------------------------------
+                                                     *Tabout.can_tabout_forward*
+                            `M.can_tabout_forward`()
+Check if forward tabout is valid at the current cursor position.
+
+Verifies that the active buffer is normal/valid (ignoring terminal buffers)
+and at least one closing delimiter exists on the current line at or after the cursor column.
+Return ~
+`(boolean)`: True if forward tabout can be performed.
+
+------------------------------------------------------------------------------
+                                                         *Tabout.tabout_forward*
+                              `M.tabout_forward`()
+Execute forward tabout to the position immediately following the next closing delimiter.
+
+Searches for the next closing delimiter on the current line. Upon matching,
+moves the cursor past the delimiter (+1 column) using 0-indexed coordinates.
+Return ~
+`(function)`: Deferred action callback executed after expression mapping.
+
+------------------------------------------------------------------------------
+                                                    *Tabout.can_tabout_backward*
+                           `M.can_tabout_backward`()
+Check if backward tabout is valid at the current cursor position.
+
+Verifies that the active buffer is normal/valid (ignoring terminal buffers)
+and at least one opening delimiter exists on the current line before the cursor column.
+Return ~
+`(boolean)`: True if backward tabout can be performed.
+
+------------------------------------------------------------------------------
+                                                        *Tabout.tabout_backward*
+                             `M.tabout_backward`()
+Execute backward tabout to the position immediately before the previous opening delimiter.
+
+Searches backward for the previous opening delimiter on the current line and
+positions the cursor before it for Insert mode typing.
+Return ~
+`(function)`: Deferred action callback executed after expression mapping.
+
+------------------------------------------------------------------------------
+                                                                *M.step_forward*
+                                `M.step_forward`
+Step definitions for `mini.keymap.map_multistep`
+
+
  vim:tw=78:ts=8:noet:ft=help:norl:

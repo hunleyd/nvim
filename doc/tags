@@ -4,8 +4,13 @@ HlSearchLens.clear	myconfig.txt	/*HlSearchLens.clear*
 HlSearchLens.show	myconfig.txt	/*HlSearchLens.show*
 HlSearchLens.statusline	myconfig.txt	/*HlSearchLens.statusline*
 M.setup_server()	myconfig.txt	/*M.setup_server()*
+M.step_forward	myconfig.txt	/*M.step_forward*
 MyTabLine	myconfig.txt	/*MyTabLine*
 Statuscolumn.update_mode	myconfig.txt	/*Statuscolumn.update_mode*
+Tabout.can_tabout_backward	myconfig.txt	/*Tabout.can_tabout_backward*
+Tabout.can_tabout_forward	myconfig.txt	/*Tabout.can_tabout_forward*
+Tabout.tabout_backward	myconfig.txt	/*Tabout.tabout_backward*
+Tabout.tabout_forward	myconfig.txt	/*Tabout.tabout_forward*
 _G.MyTabLine()	myconfig.txt	/*_G.MyTabLine()*
 core.packs	myconfig.txt	/*core.packs*
 hardtime	myconfig.txt	/*hardtime*
@@ -18,7 +23,9 @@ plugins.cmdline	myconfig.txt	/*plugins.cmdline*
 plugins.hlsearch_lens	myconfig.txt	/*plugins.hlsearch_lens*
 plugins.markdown	myconfig.txt	/*plugins.markdown*
 plugins.spellfile	myconfig.txt	/*plugins.spellfile*
+plugins.tabout	myconfig.txt	/*plugins.tabout*
 plugins.yaml_revealer	myconfig.txt	/*plugins.yaml_revealer*
 plugins.yankbank	myconfig.txt	/*plugins.yankbank*
 statuscolumn	myconfig.txt	/*statuscolumn*
+tabout	myconfig.txt	/*tabout*
 treesitter	myconfig.txt	/*treesitter*

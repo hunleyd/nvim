@@ -17,6 +17,7 @@ local function generate()
     'lua/plugins/cmdline.lua',
     'lua/plugins/statuscolumn.lua',
     'lua/plugins/hlsearch_lens.lua',
+    'lua/plugins/tabout.lua',
   }
   
   -- Generate the help file
