@@ -55,4 +55,36 @@ T["Statuscolumn"]["renders statuscolumn structure correctly"] = function()
   MiniTest.expect.equality(inactive_str:find("│", 1, true) ~= nil, true)
 end
 
+T["Statuscolumn"]["updates CursorLineNr and separator highlights on mode changes"] = function()
+  child.api.nvim_command("new")
+  child.api.nvim_buf_set_lines(0, 0, -1, false, { "line 1", "line 2" })
+
+  -- 1. Normal mode (default) -> Green (#98cdaa / 0x98cdaa)
+  local cur_nr_norm = child.lua_get("vim.api.nvim_get_hl(0, { name = 'CursorLineNr' }).fg")
+  local sep_cur_norm = child.lua_get("vim.api.nvim_get_hl(0, { name = 'MiniStatuscolumnSepCursor' }).fg")
+  MiniTest.expect.equality(cur_nr_norm, tonumber("98cdaa", 16))
+  MiniTest.expect.equality(sep_cur_norm, tonumber("98cdaa", 16))
+
+  -- 2. Insert mode -> Blue (#96bddf / 0x96bddf)
+  child.type_keys("i")
+  local cur_nr_ins = child.lua_get("vim.api.nvim_get_hl(0, { name = 'CursorLineNr' }).fg")
+  local sep_cur_ins = child.lua_get("vim.api.nvim_get_hl(0, { name = 'MiniStatuscolumnSepCursor' }).fg")
+  MiniTest.expect.equality(cur_nr_ins, tonumber("96bddf", 16))
+  MiniTest.expect.equality(sep_cur_ins, tonumber("96bddf", 16))
+
+  -- 3. Visual mode -> Magenta (#96d8e3 / 0x96d8e3)
+  child.type_keys("<Esc>", "v")
+  local cur_nr_vis = child.lua_get("vim.api.nvim_get_hl(0, { name = 'CursorLineNr' }).fg")
+  local sep_cur_vis = child.lua_get("vim.api.nvim_get_hl(0, { name = 'MiniStatuscolumnSepCursor' }).fg")
+  MiniTest.expect.equality(cur_nr_vis, tonumber("96d8e3", 16))
+  MiniTest.expect.equality(sep_cur_vis, tonumber("96d8e3", 16))
+
+  -- 4. Return to Normal mode -> Restored to Green
+  child.type_keys("<Esc>")
+  local cur_nr_back = child.lua_get("vim.api.nvim_get_hl(0, { name = 'CursorLineNr' }).fg")
+  local sep_cur_back = child.lua_get("vim.api.nvim_get_hl(0, { name = 'MiniStatuscolumnSepCursor' }).fg")
+  MiniTest.expect.equality(cur_nr_back, tonumber("98cdaa", 16))
+  MiniTest.expect.equality(sep_cur_back, tonumber("98cdaa", 16))
+end
+
 return T
