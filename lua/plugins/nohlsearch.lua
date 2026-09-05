@@ -12,6 +12,11 @@ vim.cmd.packadd("nohlsearch")
 -- Keybindings
 -- -----------------------------------------------------------------------------
 
--- Map <Esc> in Normal mode to also manually clear search highlights.
--- This is a common pattern to quickly clean up the UI.
-vim.keymap.set("n", "<Esc>", ":nohlsearch<CR><Esc>", { desc = "Clear search highlights", silent = true })
+-- Map <Esc> in Normal mode to clear search highlights and the search lens.
+-- This ensures immediate visual cleanup when canceling a search.
+vim.keymap.set(
+  "n",
+  "<Esc>",
+  ":nohlsearch<CR><cmd>lua require('plugins.hlsearch_lens').clear()<CR><Esc>",
+  { desc = "Clear search highlights and lens", silent = true }
+)

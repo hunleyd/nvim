@@ -34,6 +34,12 @@ require("plugins.matchit")
 -- nohlsearch: Automatically clear search highlights.
 require("plugins.nohlsearch")
 
+-- hlsearch_lens: Native virtual text search match indexing and count lens.
+-- Complements nohlsearch by displaying [current/total] match indicators at the
+-- end of the cursor line using native searchcount and extmarks, clearing
+-- automatically on cursor movements, mode switches, or manual :nohlsearch calls.
+require("plugins.hlsearch_lens")
+
 -- nvim.difftool: Modern directory and file comparison.
 require("plugins.difftool")
 
