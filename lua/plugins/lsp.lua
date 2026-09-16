@@ -328,7 +328,15 @@ if ok_mason and ok_mason_lsp then
     end)
   end
 
-  -- Configure the server via our wrapper
+  -- Harper's userDictPath points at the same file 'zg' writes (see plugins/spellfile.lua), sharing one dictionary.
+  M.setup_server("harper_ls", {
+    settings = {
+      ["harper-ls"] = {
+        userDictPath = vim.fn.stdpath("data") .. "/spell/en.utf-8.add",
+      },
+    },
+  })
+
   M.setup_server("lua_ls", {
     settings = {
       Lua = {
@@ -345,7 +353,7 @@ if ok_mason and ok_mason_lsp then
 
   -- Set up mason-lspconfig to ensure installation and automatically enable
   mason_lsp.setup({
-    ensure_installed = { "lua_ls" }, -- Example default
+    ensure_installed = { "lua_ls", "harper_ls" },
     automatic_enable = true,
   })
 else
