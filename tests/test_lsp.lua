@@ -38,6 +38,12 @@ T["LSP"]["LspAttach group exists"] = function()
   MiniTest.expect.equality(exists, true)
 end
 
+T["LSP"]["harper_ls user dictionary matches zg's spellfile"] = function()
+  local dict_path = child.lua_get("vim.lsp.config['harper_ls'].settings['harper-ls'].userDictPath")
+  local spellfile_path = child.lua_get("vim.fn.stdpath('data') .. '/spell/en.utf-8.add'")
+  MiniTest.expect.equality(dict_path, spellfile_path)
+end
+
 T["LSP"]["mason plugins are loadable"] = function()
   local has_mason = child.lua_get("pcall(require, 'mason')")
   MiniTest.expect.equality(has_mason, true)
