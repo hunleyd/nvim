@@ -55,6 +55,12 @@ T["YankBank"]["configures leader-p-y keymap and command"] = function()
   MiniTest.expect.equality(found_mapping.desc, "Pick Yank (YankBank)")
 end
 
+T["YankBank"]["resolves sqlite_clib_path to a file that exists on disk"] = function()
+  local clib_path = child.lua_get("vim.g.sqlite_clib_path")
+  MiniTest.expect.equality(type(clib_path), "string")
+  MiniTest.expect.equality(child.lua_get(("vim.uv.fs_stat(%q) ~= nil"):format(clib_path)), true)
+end
+
 T["YankBank"]["creates and writes to sqlite db successfully upon yanking"] = function()
   -- Settle state, get the correct expected db path
   local db_file = child.lua_get("vim.fn.stdpath('data') .. '/yankbank.db'")
