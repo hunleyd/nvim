@@ -8,9 +8,22 @@
 --- to save, search, and navigate your clipboard history across sessions.
 --- @tag plugins.yankbank
 
--- Define the SQLite system library path explicitly for our Gentoo/64-bit environment.
--- This ensures the LuaJIT FFI binding can load libsqlite3.so natively without search failure.
-vim.g.sqlite_clib_path = "/usr/lib64/libsqlite3.so"
+-- Define the SQLite system library path explicitly so the LuaJIT FFI binding
+-- can dlopen it without relying on default search paths.
+-- macOS has no physical libsqlite3.dylib on disk since Big Sur (system libs
+-- live only in the dyld shared cache), so the Homebrew keg's real file is used
+-- there instead of the OS-provided one.
+local sqlite_clib_candidates = {
+  "/usr/lib64/libsqlite3.so", -- Gentoo/64-bit Linux
+  "/opt/homebrew/opt/sqlite/lib/libsqlite3.dylib", -- Homebrew on Apple Silicon
+  "/usr/local/opt/sqlite/lib/libsqlite3.dylib", -- Homebrew on Intel macOS
+}
+for _, path in ipairs(sqlite_clib_candidates) do
+  if vim.uv.fs_stat(path) then
+    vim.g.sqlite_clib_path = path
+    break
+  end
+end
 
 -- Add sqlite.lua dependency
 vim.pack.add({
