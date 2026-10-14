@@ -59,4 +59,14 @@ T["Conform Formatting"]["FormatEnable command re-enables autoformatting"] = func
   MiniTest.expect.equality(global_disabled, false)
 end
 
+T["Conform Formatting"]["typescript is not formatted by prettier"] = function()
+  local ts_uses_prettier = child.lua_get([[vim.tbl_contains(require("conform").formatters_by_ft.typescript or {}, "prettier")]])
+  MiniTest.expect.equality(ts_uses_prettier, false)
+end
+
+T["Conform Formatting"]["javascript is still formatted by prettier"] = function()
+  local js_uses_prettier = child.lua_get([[vim.tbl_contains(require("conform").formatters_by_ft.javascript or {}, "prettier")]])
+  MiniTest.expect.equality(js_uses_prettier, true)
+end
+
 return T

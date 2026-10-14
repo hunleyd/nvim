@@ -20,7 +20,6 @@ conform.setup({
     lua = { "stylua" },
     python = { "isort", "black" },
     javascript = { "prettier" },
-    typescript = { "prettier" },
     html = { "prettier" },
     css = { "prettier" },
     json = { "prettier" },
