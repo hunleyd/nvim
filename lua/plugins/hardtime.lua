@@ -69,6 +69,7 @@ if ok then
       "netrw", 
       "minifiles", 
       "minipick", 
+      "nvim-undotree",
       "checkhealth" 
     },
   })

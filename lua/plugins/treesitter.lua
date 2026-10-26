@@ -52,10 +52,10 @@ local function setup_repeatable_moves()
 
   -- Make diagnostic jumps repeatable
   local next_diagnostic = ts_repeat_move.make_repeatable_move(function()
-    vim.diagnostic.goto_next()
+    vim.diagnostic.jump({ count = vim.v.count1 })
   end)
   local prev_diagnostic = ts_repeat_move.make_repeatable_move(function()
-    vim.diagnostic.goto_prev()
+    vim.diagnostic.jump({ count = -vim.v.count1 })
   end)
   
   -- The wrapper needs to handle the 'opts' table that make_repeatable_move passes

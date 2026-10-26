@@ -24,6 +24,7 @@ plugins.hlsearch_lens	myconfig.txt	/*plugins.hlsearch_lens*
 plugins.markdown	myconfig.txt	/*plugins.markdown*
 plugins.spellfile	myconfig.txt	/*plugins.spellfile*
 plugins.tabout	myconfig.txt	/*plugins.tabout*
+plugins.undotree	myconfig.txt	/*plugins.undotree*
 plugins.yaml_revealer	myconfig.txt	/*plugins.yaml_revealer*
 plugins.yankbank	myconfig.txt	/*plugins.yankbank*
 statuscolumn	myconfig.txt	/*statuscolumn*

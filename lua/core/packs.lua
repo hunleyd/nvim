@@ -47,8 +47,8 @@ require("plugins.tabout")
 -- nvim.difftool: Modern directory and file comparison.
 require("plugins.difftool")
 
--- fzf.vim: Fuzzy finder integration.
-require("plugins.fzf")
+-- nvim.undotree: Built-in visual undo tree navigation.
+require("plugins.undotree")
 
 -- man.lua: Enhanced man page viewer.
 require("plugins.man")

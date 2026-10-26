@@ -43,7 +43,7 @@ T["Tabline Visuals"]["matches reference exactly"] = function()
   child.api.nvim_buf_set_name(0, "clean.lua")
   
   -- Force tabline visible
-  child.api.nvim_set_option("showtabline", 2)
+  child.api.nvim_set_option_value("showtabline", 2, {})
   
   -- Final cleanup
   child.lua("require('mini.notify').clear()")

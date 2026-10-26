@@ -109,29 +109,31 @@ local on_attach = function(client, bufnr)
   vim.bo[bufnr][source_func] = "v:lua.MiniCompletion.completefunc_lsp"
 
   -- 2. Standard LSP Mappings
-  local opts = { buffer = bufnr }
-  
   -- Navigation
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition", buffer = bufnr })
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "LSP: Show References", buffer = bufnr })
-  vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { desc = "LSP: Go to Implementation", buffer = bufnr })
-  vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "LSP: Type Definition", buffer = bufnr })
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP: Go to Definition", buf = bufnr })
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "LSP: Show References", buf = bufnr })
+  vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { desc = "LSP: Go to Implementation", buf = bufnr })
+  vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "LSP: Type Definition", buf = bufnr })
   
   -- Information
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = bufnr })
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Help", buffer = bufnr })
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buf = bufnr })
+  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Help", buf = bufnr })
   
   -- Editing
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: Rename Symbol", buffer = bufnr })
-  vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code Action", buffer = bufnr })
+  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: Rename Symbol", buf = bufnr })
+  vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: Code Action", buf = bufnr })
   vim.keymap.set("n", "<leader>f", function()
     require("conform").format({ async = true, lsp_format = "fallback" })
-  end, { desc = "Format Buffer", buffer = bufnr })
+  end, { desc = "Format Buffer", buf = bufnr })
 
   -- 3. Diagnostic Navigation
-  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "LSP: Prev Diagnostic", buffer = bufnr })
-  vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "LSP: Next Diagnostic", buffer = bufnr })
-  vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "LSP: Open Diagnostic List", buffer = bufnr })
+  vim.keymap.set("n", "[d", function()
+    vim.diagnostic.jump({ count = -vim.v.count1 })
+  end, { desc = "LSP: Prev Diagnostic", buf = bufnr })
+  vim.keymap.set("n", "]d", function()
+    vim.diagnostic.jump({ count = vim.v.count1 })
+  end, { desc = "LSP: Next Diagnostic", buf = bufnr })
+  vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { desc = "LSP: Open Diagnostic List", buf = bufnr })
 end
 
 -- Register the global LspAttach autocmd

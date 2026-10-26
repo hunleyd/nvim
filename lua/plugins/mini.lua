@@ -568,22 +568,6 @@ require("mini.align").setup({
 })
 
 -- -----------------------------------------------------------------------------
--- Configuration: mini.comment (Native Commenting Alternative)
--- -----------------------------------------------------------------------------
-
-require("mini.comment").setup({
-  mappings = {
-    comment_line = "gcc",
-    comment_visual = "gc",
-    textobject = "gc",
-  },
-  options = {
-    pad_comment_parts = true,
-    ignore_blank_line = true,
-  },
-})
-
--- -----------------------------------------------------------------------------
 -- Configuration: mini.completion (Async Autocompletion)
 -- -----------------------------------------------------------------------------
 
@@ -1289,7 +1273,7 @@ minimap.setup({
 vim.api.nvim_create_autocmd({ "BufEnter", "FileType", "VimEnter" }, {
   group = vim.api.nvim_create_augroup("MiniMapAutoOpen", { clear = true }),
   callback = function()
-    local exclude_ft = { "ministarter", "minifiles", "minipick" }
+    local exclude_ft = { "ministarter", "minifiles", "minipick", "nvim-undotree" }
     local ft = vim.bo.filetype
     local buftype = vim.bo.buftype
 

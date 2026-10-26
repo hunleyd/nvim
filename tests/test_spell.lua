@@ -97,7 +97,7 @@ T["Spelling"]["generates spelling diagnostics on the fly for misspelled words"] 
   child.api.nvim_command("sleep 100m")
   
   -- Now force trigger BufEnter to run spelling diagnostics synchronously
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
   
   -- Query the diagnostics for the current buffer
   local diags = child.lua([[
@@ -134,7 +134,7 @@ T["Spelling"]["zg and zw keys update dictionary and instantly refresh diagnostic
   child.api.nvim_command("sleep 100m")
   
   -- Now force trigger BufEnter to run spelling diagnostics synchronously
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
   
   -- Verify the diagnostic is present initially
   local diags_before = child.lua([[
@@ -179,7 +179,7 @@ T["Spelling"]["switching buffers correctly updates and displays spelling diagnos
   
   -- Settle and force diagnostics
   child.api.nvim_command("sleep 100m")
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
 
   -- Create buffer 2 with another misspelled word and enable spelling on both windows
   child.api.nvim_command("new buffer2.lua")
@@ -189,14 +189,14 @@ T["Spelling"]["switching buffers correctly updates and displays spelling diagnos
   
   -- Settle and force diagnostics
   child.api.nvim_command("sleep 100m")
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
 
   -- Switch back to buffer 1 (using :bprevious or [b simulation)
   child.api.nvim_command("bprevious")
   
   -- Settle and force diagnostics
   child.api.nvim_command("sleep 100m")
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
 
   -- Verify spelling diagnostics are present in the active buffer
   local diags = child.lua([[

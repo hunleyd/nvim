@@ -11,14 +11,5 @@
 -- -----------------------------------------------------------------------------
 
 -- Configure the system clipboard to use the built-in OSC 52 provider.
-vim.g.clipboard = {
-  name = 'OSC 52',
-  copy = {
-    ['+'] = function(lines) require('vim.ui.osc52').copy('+')(lines) end,
-    ['*'] = function(lines) require('vim.ui.osc52').copy('*')(lines) end,
-  },
-  paste = {
-    ['+'] = function() return require('vim.ui.osc52').paste('+')() end,
-    ['*'] = function() return require('vim.ui.osc52').paste('*')() end,
-  },
-}
+-- Neovim v0.12+ accepts the provider name string directly (see :help clipboard-osc52).
+vim.g.clipboard = "osc52"
