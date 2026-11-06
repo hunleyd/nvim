@@ -23,7 +23,7 @@ T["Minimap"]["minimap loads instantly for small files"] = function()
   child.api.nvim_buf_set_lines(0, 0, -1, false, { "print('hello')" })
   
   -- Force trigger BufEnter to auto-open
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
   
   -- Settle the asynchronous window creation of mini.map
   child.api.nvim_command("sleep 100m")
@@ -48,7 +48,7 @@ T["Minimap"]["minimap deferral and notification for large files"] = function()
   child.lua("require('mini.notify').clear()")
   
   -- Force trigger BufEnter to simulate entering a >500 line buffer
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
   
   -- Verify that the "Generating minimap" notification is created
   local notif_created = child.lua([[

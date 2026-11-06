@@ -19,6 +19,5 @@ vim.opt.autocomplete = false
 -- popup   : Show documentation/extra info in a popup window.
 vim.opt.completeopt = { "menuone", "noselect", "popup" }
 
--- Set a short delay (in milliseconds) before the completion menu appears.
--- This prevents the menu from flickering while typing quickly.
-vim.opt.autocompletedelay = 100
+-- Use rounded borders on the popup menu to match UI2 and meowsoot floating windows.
+vim.opt.pumborder = "rounded"

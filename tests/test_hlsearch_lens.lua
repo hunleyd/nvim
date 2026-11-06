@@ -105,7 +105,7 @@ T["SearchLens"]["clears extmark on cursor movement away from match"] = function(
     lens.show()
     -- Move cursor to line 2
     vim.api.nvim_win_set_cursor(0, { 2, 0 })
-    vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0 })
+    vim.api.nvim_exec_autocmds("CursorMoved", { buf = 0 })
   ]])
 
   local count = child.lua_get("#vim.api.nvim_buf_get_extmarks(0, vim.api.nvim_create_namespace('hlsearch_lens'), 0, -1, {})")

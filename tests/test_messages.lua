@@ -104,7 +104,7 @@ T["Messages"]["line deletion triggers fewer lines popup notification"] = functio
   child.api.nvim_buf_set_lines(0, 0, -1, false, { "line1", "line2", "line3", "line4", "line5" })
   
   -- Force trigger BufEnter to initialize line count
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
   
   -- Settle state, clear prior notifications
   child.lua("require('mini.notify').clear()")
@@ -128,12 +128,34 @@ T["Messages"]["line deletion triggers fewer lines popup notification"] = functio
   MiniTest.expect.equality(msg, "3 fewer lines")
 end
 
-T["Messages"]["v:starttime and v:exitreason are available in v0.12.3"] = function()
+T["Messages"]["v:starttime, v:exitreason, and v:startreason are available in v0.12.6"] = function()
   local starttime = child.lua_get("vim.v.starttime")
   local exitreason_exists = child.lua_get("vim.v.exitreason ~= nil")
+  local startreason_exists = child.lua_get("vim.v.startreason ~= nil")
   MiniTest.expect.equality(type(starttime), "number")
   MiniTest.expect.equality(starttime > 0, true)
   MiniTest.expect.equality(exitreason_exists, true)
+  MiniTest.expect.equality(startreason_exists, true)
+end
+
+T["Messages"]["osc52 clipboard and built-in undotree are configured for v0.12.6"] = function()
+  local clipboard = child.lua_get("vim.g.clipboard")
+  MiniTest.expect.equality(clipboard, "osc52")
+
+  local has_undotree = child.lua_get("vim.fn.exists(':Undotree') == 2")
+  MiniTest.expect.equality(has_undotree, true)
+
+  local undofile = child.lua_get("vim.o.undofile")
+  MiniTest.expect.equality(undofile, true)
+
+  local undotree_map = child.lua_get("vim.fn.maparg('<leader>u', 'n') ~= ''")
+  MiniTest.expect.equality(undotree_map, true)
+
+  -- Verify native gc/gcc commenting is active without mini.comment
+  local mini_comment_loaded = child.lua_get("package.loaded['mini.comment'] ~= nil")
+  MiniTest.expect.equality(mini_comment_loaded, false)
+  local gcc_map = child.lua_get("vim.fn.maparg('gcc', 'n') ~= ''")
+  MiniTest.expect.equality(gcc_map, true)
 end
 
 T["Messages"]["writefile accepts lua string blob directly in v0.12.3"] = function()

@@ -56,8 +56,8 @@ function M.show()
     return nil
   end
 
-  -- Compute match count using native C searchcount
-  local sc = vim.fn.searchcount({ recompute = 1, maxcount = 999 })
+  -- Compute match count using native C searchcount (respects 'maxsearchcount' default 999)
+  local sc = vim.fn.searchcount({ recompute = 1 })
   if sc.total == 0 or sc.current == 0 then
     M.clear(bufnr)
     return nil
@@ -97,7 +97,7 @@ function M.statusline()
   if vim.v.hlsearch == 0 then
     return ""
   end
-  local sc = vim.fn.searchcount({ recompute = 0, maxcount = 999 })
+  local sc = vim.fn.searchcount({ recompute = 0 })
   if sc.total == 0 then
     return ""
   end

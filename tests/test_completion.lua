@@ -40,16 +40,16 @@ T["Completion"]["on_attach configures matching source_func"] = function()
   -- Our LspAttach autocommand in lua/plugins/lsp.lua runs on LspAttach event.
   child.lua([[
     local bufnr = ...
-    -- Emit UserLspConfig / LspAttach
+  -- Emit UserLspConfig / LspAttach
     vim.api.nvim_exec_autocmds("LspAttach", {
-      buffer = bufnr,
+      buf = bufnr,
       data = { client_id = 1 }
     })
   ]], { bufnr })
 
   -- Check the values of omnifunc and completefunc
-  local omnifunc = child.api.nvim_buf_get_option(bufnr, "omnifunc")
-  local completefunc = child.api.nvim_buf_get_option(bufnr, "completefunc")
+  local omnifunc = child.api.nvim_get_option_value("omnifunc", { buf = bufnr })
+  local completefunc = child.api.nvim_get_option_value("completefunc", { buf = bufnr })
   
   -- Get the configured source_func from mini.completion
   local source_func = child.lua_get("MiniCompletion.config.lsp_completion.source_func")
@@ -88,9 +88,8 @@ T["Completion"]["CursorMoved in Insert mode triggers spelling completion on miss
   -- Create a new buffer and enable spelling on BOTH windows to prevent FFI active/inactive mismatches
   child.api.nvim_command("new")
   local win_id = child.api.nvim_get_current_win()
-  child.api.nvim_win_set_option(win_id, "spell", true)
-  child.api.nvim_buf_set_option(0, "spell", true)
-  child.lua("pcall(vim.api.nvim_win_set_option, 1000, 'spell', true)")
+  child.api.nvim_set_option_value("spell", true, { win = win_id })
+  child.lua("pcall(vim.api.nvim_set_option_value, 'spell', true, { win = 1000 })")
   
   -- Settle state, clear prior notifications
   child.lua("require('mini.notify').clear()")
@@ -107,19 +106,24 @@ T["Completion"]["CursorMoved in Insert mode triggers spelling completion on miss
   child.api.nvim_feedkeys("A", "nx", true)
   
   -- Force trigger BufEnter and BufWinEnter to align all spellcheck contexts
-  child.api.nvim_exec_autocmds("BufWinEnter", { buffer = 0 })
-  child.api.nvim_exec_autocmds("BufEnter", { buffer = 0 })
+  child.api.nvim_exec_autocmds("BufWinEnter", { buf = 0 })
+  child.api.nvim_exec_autocmds("BufEnter", { buf = 0 })
   
   -- Verify that the SpellCompletionAuto autocommand group is successfully registered
   local has_auto = child.lua_get("vim.fn.exists('#SpellCompletionAuto') == 1")
   MiniTest.expect.equality(has_auto, true)
   
-  -- Execute the fallback action callback manually and verify it runs safely without errors
+  -- Verify that the fallback action callback runs safely without errors
   local ok = child.lua([[
     local ok, err = pcall(MiniCompletion.config.fallback_action)
     return ok
   ]])
   MiniTest.expect.equality(ok, true)
+end
+
+T["Completion"]["pumborder is set to rounded for v0.12 UI consistency"] = function()
+  local pumborder = child.lua_get("vim.o.pumborder")
+  MiniTest.expect.equality(pumborder, "rounded")
 end
 
 return T

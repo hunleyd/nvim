@@ -18,6 +18,7 @@ local function generate()
     'lua/plugins/statuscolumn.lua',
     'lua/plugins/hlsearch_lens.lua',
     'lua/plugins/tabout.lua',
+    'lua/plugins/undotree.lua',
   }
   
   -- Generate the help file
