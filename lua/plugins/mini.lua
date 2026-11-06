@@ -1451,6 +1451,9 @@ vim.opt.updatetime = 300
 -- Cursor Aesthetics: Keep the cursor as a solid block in all modes
 vim.opt.guicursor = ""
 
+-- Soft Wrap: Wrap long lines; set after mini.basics, which disables it.
+vim.opt.wrap = true
+
 -- Scrolling Context: Keep 8 lines of context above/below the cursor when scrolling
 vim.opt.scrolloff = 8
 
