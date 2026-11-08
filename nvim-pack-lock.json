@@ -52,10 +52,6 @@
       "rev": "50092d60feb242602d7578398c6eb53b4a8ffe7b",
       "src": "https://github.com/kkharji/sqlite.lua"
     },
-    "statuscol.nvim": {
-      "rev": "887b8a03ea3804628505c9002fd07bd06a3db2e0",
-      "src": "https://github.com/luukvbaal/statuscol.nvim"
-    },
     "tiny-cmdline.nvim": {
       "rev": "e247d9ee4c980734f8f8bf616d31e0ab7c27485d",
       "src": "https://github.com/rachartier/tiny-cmdline.nvim"
