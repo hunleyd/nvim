@@ -72,5 +72,5 @@ NVIM_APPNAME=hunleyd/nvim/ nvim
 
 ## Language Servers
 
-- harper_ls
-- lua_ls
+- [harper_ls](https://github.com/Automattic/harper) - Offline, privacy-first grammar checker. Fast, open-source, Rust-powered
+- [lua_ls](https://github.com/LuaLS/lua-language-server) - A language server that offers Lua language support - programmed in Lua
